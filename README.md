@@ -4,14 +4,14 @@ Versi ini adalah salinan resmi dari situs CariSaja yang dipublikasikan.
 
 ## Status
 - Branch publik untuk Pages: `gh-pages`
-- Halaman: https://bnnpedang88mk.github.io/carisaja/](https://bnnpedang88mk.github.io/Pengaduan-Member/
+- Halaman: https://bnnpedang88mk.github.io/Pengaduan-Member/
 
 ## Instruksi penting (Jangan ubah tanpa persetujuan)
 1. Jangan mengedit `index.html` langsung pada branch `main` tanpa membuat pull request.
 2. Aktifkan Branch Protection pada branch `main` agar hanya perubahan lewat Pull Request yang dapat diterima.
 
 ### Cara mengaktifkan Branch Protection (GitHub)
-1. Buka: `https://github.com/bnnpedang88MK/carisaja/settings/branches](https://bnnpedang88mk.github.io/Pengaduan-Member/'
+1. Buka: `https://bnnpedang88mk.github.io/Pengaduan-Member/'
 2. Klik "Add rule" dan masukkan `main` pada "Branch name pattern".
 3. Centang opsi:
    - Require pull request reviews before merging
