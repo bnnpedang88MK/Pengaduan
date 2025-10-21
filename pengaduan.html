@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://imagedelivery.net/KDi5FNXxy3aBKXQu527k3w/dc5a84f9-8855-46df-dc63-c832dc477f00/public" sizes="any">
+    <title>Pengaduan Member</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a4d1a 0%, #000000 100%);
+            min-height: 100%;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .background-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(76, 175, 80, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+            background: rgba(46, 125, 50, 0.08);
+        }
+        
+        .floating-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        .floating-shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 1s;
+            background: rgba(76, 175, 80, 0.05);
+        }
+        
+        .floating-shape:nth-child(5) {
+            width: 40px;
+            height: 40px;
+            top: 50%;
+            left: 5%;
+            animation-delay: 3s;
+        }
+        
+        .floating-shape:nth-child(6) {
+            width: 90px;
+            height: 90px;
+            top: 70%;
+            right: 25%;
+            animation-delay: 5s;
+            background: rgba(46, 125, 50, 0.06);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+        
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(76, 175, 80, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(76, 175, 80, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-description {
+            font-size: 16px;
+            opacity: 0.95;
+            margin: 0;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-description p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        
+        .form-content {
+            padding: 40px 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .required {
+            color: #e53e3e;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+        
+        .radio-option:hover {
+            border-color: #4caf50;
+            background-color: #f8fff8;
+            transform: translateX(4px);
+        }
+        
+        .radio-option.selected {
+            border-color: #4caf50;
+            background-color: #f8fff8;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+        
+        .radio-option input[type="radio"] {
+            margin-right: 12px;
+            accent-color: #4caf50;
+            transform: scale(1.2);
+        }
+        
+        .file-upload-area {
+            border: 3px dashed #4caf50;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            background-color: #f8fff8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .file-upload-area:hover {
+            background-color: #f0fff0;
+            border-color: #2e7d32;
+            transform: translateY(-2px);
+        }
+        
+        .file-upload-area.dragover {
+            border-color: #2e7d32;
+            background-color: #e8f5e8;
+            transform: scale(1.02);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .upload-subtext {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .file-list {
+            margin-top: 20px;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .file-size {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .remove-file {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .remove-file:hover {
+            background: #ff3742;
+            transform: scale(1.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .apology-message {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2);
+            animation: slideDown 0.8s ease-out;
+        }
+        
+        .apology-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ffc107;
+        }
+        
+        .apology-header h2 {
+            color: #856404;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .apology-content {
+            color: #856404;
+            line-height: 1.7;
+        }
+        
+        .apology-content p {
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .commitment-box {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .commitment-box h3 {
+            color: #2e7d32;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .commitment-box ul {
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .commitment-box li {
+            margin-bottom: 10px;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        
+        .apology-closing {
+            background: rgba(46, 125, 50, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4caf50;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        .contact-urgency {
+            background: rgba(220, 53, 69, 0.1);
+            border: 2px solid #dc3545;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .contact-urgency p {
+            margin: 5px 0;
+            color: #721c24;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+            display: none;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hidden-input {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .form-content {
+                padding: 30px 20px;
+            }
+            
+            .form-header {
+                padding: 30px 20px;
+            }
+            
+            .form-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-decoration">
+        <div class="grid-pattern"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+    
+    <main class="form-container">
+        <header class="form-header">
+            <h1 class="form-title">📋 Form Pengaduan Konsumen</h1>
+            <div class="form-description">
+                <p>Sampaikan keluhan atau saran Anda kepada kami. Kami berkomitmen untuk memberikan pelayanan terbaik dan menindaklanjuti setiap masukan yang diberikan.</p>
+                <p><strong>Semua informasi akan dijaga kerahasiaannya dan ditangani dengan profesional.</strong></p>
+            </div>
+        </header>
+        
+        <div class="form-content">
+            <div class="apology-message" id="apologyMessage" style="display: none;">
+                <div class="apology-header">
+                    <h2>🙏 Permohonan Maaf Kami</h2>
+                </div>
+                <div class="apology-content">
+                    <p><strong>Kepada Member yang Terhormat,</strong></p>
+                    <p>Kami dengan tulus memohon maaf atas segala ketidaknyamanan dan masalah yang telah Anda alami dalam menggunakan layanan kami. Kami menyadari bahwa kepercayaan Anda adalah aset yang paling berharga bagi kami.</p>
+                    
+                    <div class="commitment-box">
+                        <h3>💪 Komitmen Kami:</h3>
+                        <ul>
+                            <li>✅ <strong>Respon Cepat:</strong> Setiap pengaduan akan ditanggapi dalam maksimal 2 jam</li>
+                            <li>✅ <strong>Penyelesaian Prioritas:</strong> Masalah deposit/withdraw diselesaikan dalam 24 jam</li>
+                            <li>✅ <strong>Kompensasi Fair:</strong> Ganti rugi sesuai dengan kerugian yang dialami</li>
+                            <li>✅ <strong>Perbaikan Sistem:</strong> Upgrade berkelanjutan untuk mencegah masalah serupa</li>
+                            <li>✅ <strong>Transparansi Penuh:</strong> Update progress penyelesaian secara berkala</li>
+                        </ul>
+                    </div>
+                    
+                    <p class="apology-closing">
+                        <strong>Kami berjanji akan bekerja keras 24/7 untuk memastikan pengalaman bermain Anda kembali menyenangkan dan aman. Kepuasan dan kepercayaan Anda adalah prioritas utama kami.</strong>
+                    </p>
+                    
+                    <div class="contact-urgency">
+                        <p><strong>📞 Untuk masalah URGENT, hubungi langsung:</strong></p>
+                        <p>WhatsApp: <strong>+855 76 248 0281</strong> (24/7)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ <strong>Pengaduan berhasil dikirim!</strong> Anda akan diarahkan ke WhatsApp untuk konfirmasi. Tim kami akan segera menindaklanjuti dan memberikan solusi terbaik.
+            </div>
+            
+            <form id="complaintForm">
+                <div class="form-group">
+                    <label for="usherID" class="form-label">Usher ID <span class="required">*</span></label>
+                    <input type="text" id="usherID" name="usherID" class="form-input" required>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">Nomor Telepon</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="Contoh: 08123456789">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Jenis Pengaduan <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="complaintType" value="deposit-tidak-diproses" required>
+                            <span>💰 Deposit tidak diproses</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="complaintType" value="withdraw-tidak-dibayar" required>
+                            <span>💸 Withdraw tidak dibayar</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="complaintType" value="proses-deposit-lama" required>
+                            <span>⏰ Proses deposit lebih dari 10 menit</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="complaintType" value="tidak-ada-live-chat" required>
+                            <span>💬 Tidak ada live chat</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="complaintType" value="pelayanan-cs-tidak-memuaskan" required>
+                            <span>😞 Pelayanan CS tidak memuaskan</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description" class="form-label">Deskripsi Lengkap <span class="required">*</span></label>
+                    <textarea id="description" name="description" class="form-input form-textarea" placeholder="Jelaskan masalah Anda secara detail, termasuk kapan kejadian, produk yang terlibat, dan dampak yang dialami..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Upload Bukti/Gambar (Maksimal 10 file)</label>
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <div class="upload-icon">📎</div>
+                        <div class="upload-text">Upload file</div>
+                        <div class="upload-subtext">Hanya gambar (jpg, png, jpeg)<br>Maksimal 10 file</div>
+                    </div>
+                    <input type="file" id="fileInput" class="hidden-input" multiple accept=".jpg,.jpeg,.png">
+                    <ul class="file-list" id="fileList"></ul>
+                </div>
+                
+                <button type="submit" class="submit-btn">Kirim Pengaduan</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // File upload functionality
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        let uploadedFiles = [];
+
+        // Click to upload
+        fileUploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Drag and drop functionality
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        function handleFiles(files) {
+            // Convert to array for older browser compatibility
+            var fileArray = Array.prototype.slice.call(files);
+            
+            for (var i = 0; i < fileArray.length; i++) {
+                var file = fileArray[i];
+                
+                if (uploadedFiles.length >= 10) {
+                    alert('Maksimal 10 file yang dapat diupload.');
+                    return;
+                }
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File ' + file.name + ' terlalu besar. Maksimal 5MB per file.');
+                    return;
+                }
+                
+                var allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (allowedTypes.indexOf(file.type) === -1) {
+                    alert('Format file ' + file.name + ' tidak didukung. Gunakan JPG, PNG, atau JPEG.');
+                    return;
+                }
+
+                uploadedFiles.push(file);
+                displayFile(file);
+            }
+        }
+
+        function displayFile(file) {
+            const li = document.createElement('li');
+            li.className = 'file-item';
+            li.innerHTML = `
+                <div class="file-info">
+                    <span class="file-name">${file.name}</span>
+                    <span class="file-size">(${formatFileSize(file.size)})</span>
+                </div>
+                <button type="button" class="remove-file" onclick="removeFile('${file.name}', this)">×</button>
+            `;
+            fileList.appendChild(li);
+        }
+
+        function removeFile(fileName, button) {
+            // Filter files for older browser compatibility
+            var newFiles = [];
+            for (var i = 0; i < uploadedFiles.length; i++) {
+                if (uploadedFiles[i].name !== fileName) {
+                    newFiles.push(uploadedFiles[i]);
+                }
+            }
+            uploadedFiles = newFiles;
+            
+            // Remove element with fallback
+            if (button.parentElement.remove) {
+                button.parentElement.remove();
+            } else {
+                button.parentElement.parentNode.removeChild(button.parentElement);
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Radio button selection styling with browser compatibility
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        for (var i = 0; i < radioButtons.length; i++) {
+            radioButtons[i].addEventListener('change', function() {
+                // Remove selected class from all options in this group
+                var groupRadios = document.querySelectorAll('input[name="' + this.name + '"]');
+                for (var j = 0; j < groupRadios.length; j++) {
+                    var parentOption = groupRadios[j].parentElement;
+                    while (parentOption && !parentOption.classList.contains('radio-option')) {
+                        parentOption = parentOption.parentElement;
+                    }
+                    if (parentOption) {
+                        parentOption.classList.remove('selected');
+                    }
+                }
+                // Add selected class to current option
+                var currentOption = this.parentElement;
+                while (currentOption && !currentOption.classList.contains('radio-option')) {
+                    currentOption = currentOption.parentElement;
+                }
+                if (currentOption) {
+                    currentOption.classList.add('selected');
+                }
+            });
+        }
+
+        // Form submission with enhanced browser compatibility
+        document.getElementById('complaintForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data with fallback for older browsers
+            var formData = new FormData(this);
+            var usherID = formData.get('usherID') || document.getElementById('usherID').value;
+            var phone = formData.get('phone') || document.getElementById('phone').value;
+            var complaintType = formData.get('complaintType') || document.querySelector('input[name="complaintType"]:checked').value;
+            var description = formData.get('description') || document.getElementById('description').value;
+            
+            // Validate required fields
+            if (!usherID || !complaintType || !description) {
+                alert('Mohon lengkapi semua field yang wajib diisi (*)');
+                return;
+            }
+            
+            // Prepare data for Google Sheets with timestamp
+            var currentDate = new Date();
+            var timestamp = currentDate.getDate() + '/' + 
+                           (currentDate.getMonth() + 1) + '/' + 
+                           currentDate.getFullYear() + ' ' + 
+                           currentDate.getHours() + ':' + 
+                           currentDate.getMinutes();
+            
+            var sheetData = {
+                timestamp: timestamp,
+                usherID: usherID,
+                phone: phone || 'Tidak diisi',
+                complaintType: complaintType,
+                description: description,
+                fileCount: uploadedFiles.length
+            };
+            
+            // Send to Google Sheets (uncomment and replace with your Google Apps Script URL)
+            /*
+            fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sheetData)
+            }).catch(function(error) {
+                console.log('Error sending to sheets:', error);
+            });
+            */
+            
+            // Prepare WhatsApp message with proper encoding
+            var complaintTypeText = {
+                'deposit-tidak-diproses': 'Deposit tidak diproses',
+                'withdraw-tidak-dibayar': 'Withdraw tidak dibayar',
+                'proses-deposit-lama': 'Proses deposit lebih dari 10 menit',
+                'tidak-ada-live-chat': 'Tidak ada live chat',
+                'pelayanan-cs-tidak-memuaskan': 'Pelayanan CS tidak memuaskan'
+            };
+            
+            var whatsappMessage = '*PENGADUAN KONSUMEN*\n\n' +
+                '*Usher ID:* ' + usherID + '\n' +
+                '*Nomor Telepon:* ' + (phone || 'Tidak diisi') + '\n' +
+                '*Jenis Pengaduan:* ' + complaintTypeText[complaintType] + '\n' +
+                '*Deskripsi:* ' + description + '\n' +
+                '*Jumlah File:* ' + uploadedFiles.length + ' file\n\n' +
+                'Terima kasih atas laporan Anda. Kami akan segera menindaklanjuti.';
+            
+            // Encode message for URL
+            var encodedMessage = encodeURIComponent(whatsappMessage);
+            
+            // Show apology message first
+            var apologyMessage = document.getElementById('apologyMessage');
+            apologyMessage.style.display = 'block';
+            apologyMessage.scrollIntoView({ behavior: 'smooth' });
+            
+            // Show success message after 3 seconds
+            setTimeout(function() {
+                var successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'block';
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+            }, 3000);
+            
+            // Open WhatsApp after 6 seconds (after apology and success message)
+            setTimeout(function() {
+                var whatsappURL = 'https://api.whatsapp.com/send/?phone=855762480281&text=' + encodedMessage;
+                
+                // Try to open in new tab/window
+                try {
+                    var newWindow = window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+                    if (!newWindow) {
+                        // Fallback if popup blocked
+                        window.location.href = whatsappURL;
+                    }
+                } catch (error) {
+                    // Final fallback
+                    window.location.href = whatsappURL;
+                }
+            }, 6000);
+
+            // Reset form
+            this.reset();
+            uploadedFiles = [];
+            fileList.innerHTML = '';
+            
+            // Remove selected styling from radio buttons
+            var radioOptions = document.querySelectorAll('.radio-option');
+            for (var i = 0; i < radioOptions.length; i++) {
+                radioOptions[i].classList.remove('selected');
+            }
+
+            // Hide messages after 12 seconds
+            setTimeout(function() {
+                apologyMessage.style.display = 'none';
+                document.getElementById('successMessage').style.display = 'none';
+            }, 12000);
+        });
+
+        // Input focus animations with browser compatibility
+        var formInputs = document.querySelectorAll('.form-input');
+        for (var i = 0; i < formInputs.length; i++) {
+            formInputs[i].addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            formInputs[i].addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9920da57b342cb79',t:'MTc2MTA1MDczNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
