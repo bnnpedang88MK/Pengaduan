@@ -778,6 +778,46 @@
             });
         }
 
+        // Fonte webhook configuration
+        var fonteWebhookUrl = 'https://your-fonte-webhook-url';
+        var fonteBotName = 'temukanaja';
+        var fonteApiToken = '';
+
+        function sendToFonteWebhook(payload) {
+            if (!fonteWebhookUrl || fonteWebhookUrl === 'https://your-fonte-webhook-url') {
+                return;
+            }
+
+            var body = JSON.stringify(payload);
+            var headers = { 'Content-Type': 'application/json' };
+            if (fonteApiToken) {
+                headers.Authorization = 'Bearer ' + fonteApiToken;
+            }
+
+            if (window.fetch) {
+                fetch(fonteWebhookUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: body
+                }).catch(function(error) {
+                    console.log('Error sending to Fonte webhook:', error);
+                });
+                return;
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', fonteWebhookUrl, true);
+            for (var headerKey in headers) {
+                if (Object.prototype.hasOwnProperty.call(headers, headerKey)) {
+                    xhr.setRequestHeader(headerKey, headers[headerKey]);
+                }
+            }
+            xhr.onerror = function() {
+                console.log('Error sending to Fonte webhook');
+            };
+            xhr.send(body);
+        }
+
         // Form submission with enhanced browser compatibility
         document.getElementById('complaintForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -811,7 +851,7 @@
                 description: description,
                 fileCount: uploadedFiles.length
             };
-            
+
             // Send to Google Sheets (uncomment and replace with your Google Apps Script URL)
             /*
             fetch('https://https://script.google.com/macros/s/AKfycbwEFLwRomcOQC-YWYmWGnu8lR9hFJ94P97T5NYqKiYJFHK9RhrVzwMiVf2q01oUQvm_IQ/exec', {
@@ -834,6 +874,27 @@
                 'tidak-ada-live-chat': 'Tidak ada live chat',
                 'pelayanan-cs-tidak-memuaskan': 'Pelayanan CS tidak memuaskan'
             };
+
+            var webhookPayload = {
+                source: 'pengaduan-form',
+                bot: fonteBotName,
+                timestamp: timestamp,
+                usherID: usherID,
+                phone: phone || 'Tidak diisi',
+                complaintType: complaintType,
+                complaintTypeLabel: complaintTypeText[complaintType],
+                description: description,
+                fileCount: uploadedFiles.length,
+                files: uploadedFiles.map(function(file) {
+                    return {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type
+                    };
+                })
+            };
+
+            sendToFonteWebhook(webhookPayload);
             
             var whatsappMessage = '*PENGADUAN KONSUMEN*\n\n' +
                 '*Usher ID:* ' + usherID + '\n' +
