@@ -167,33 +167,35 @@
 </div>
 
 <script>
-    // PASTE LINK WEBHOOK GOOGLE SCRIPT KAMU DI SINI
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyoftctyBvFnil-afxwU5zxIsM0RwTslEGh-stCyZOLFyuKm23-OdTvQY3YtNTD9fA4/exec'
-  const form = document.getElementById('pengaduan-form')
-  const btnKirim = document.getElementById('btn-kirim')
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwEsUWSXjaKqeR38fy0NFWjbEAO_YzEDQSvAQkruxXNs--PmAizRHT5nrxW2umgh3y7/exec';
+const form = document.getElementById('pengaduan-form');
 
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    btnKirim.disabled = true
-    btnKirim.innerText = "MENGIRIM..."
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    const btnKirim = document.getElementById('btn-kirim');
+    btnKirim.disabled = true;
+    btnKirim.innerText = "MENGIRIM...";
 
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => {
-          alert("Keadilan telah ditegakkan! Laporan Anda berhasil terkirim.")
-          form.reset()
-          btnKirim.disabled = false
-          btnKirim.innerText = "KIRIM"
-      })
-      .catch(error => {
-          alert("Gagal mengirim! Coba lagi nanti.")
-          btnKirim.disabled = false
-          btnKirim.innerText = "KIRIM"
-      })
-  })
+    // Mengambil semua data form secara otomatis
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: new FormData(form) // Mengirim langsung sebagai FormData
+    })
+    .then(response => {
+        alert("Laporan Berhasil Terkirim!");
+        form.reset();
+    })
+    .catch(error => alert("Gagal kirim!"))
+    .finally(() => {
+        btnKirim.disabled = false;
+        btnKirim.innerText = "KIRIM";
+    });
+});
 </script>
 
 </body>
 </html>
+
 
 
 
