@@ -168,73 +168,33 @@
 
 <script>
     // PASTE LINK WEBHOOK GOOGLE SCRIPT KAMU DI SINI
-    const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwTxIdWK_ojySzl0KByVaaZmU67CNI5UoqbjbrhxSBRsP1lrMZ28Xrr3C8BovAOdEWn/exec";
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyoftctyBvFnil-afxwU5zxIsM0RwTslEGh-stCyZOLFyuKm23-OdTvQY3YtNTD9fA4/exec'
+  const form = document.getElementById('pengaduan-form')
+  const btnKirim = document.getElementById('btn-kirim')
 
-    const fileInput = document.getElementById('fileInput');
-    const preview = document.getElementById('preview-img');
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    btnKirim.disabled = true
+    btnKirim.innerText = "MENGIRIM..."
 
-    fileInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        }
-    });
-
-    document.getElementById('complaintForm').onsubmit = async function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "MENGIRIM...";
-        btn.disabled = true;
-
-        const file = fileInput.files[0];
-        let imageB64 = "";
-
-        if (file) {
-            const reader = new FileReader();
-            imageB64 = await new Promise(resolve => {
-                reader.onload = () => resolve(reader.result);
-                reader.readAsDataURL(file);
-            });
-        }
-
-        const payload = {
-            kategori: document.getElementById('kategori').value,
-            username: document.getElementById('username').value,
-            whatsapp: document.getElementById('whatsapp').value,
-            keluhan: document.getElementById('keluhan').value,
-            imageB64: imageB64
-        };
-
-        try {
-            // Mengirim data ke Google Apps Script Webhook
-            const response = await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Penting untuk Web App Script
-                cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            alert('Pengaduan Berhasil Dikirim! Gong Xi Fa Cai!');
-            this.reset();
-            preview.style.display = 'none';
-        } catch (error) {
-            alert('Terjadi kesalahan saat mengirim laporan.');
-            console.error(error);
-        } finally {
-            btn.innerText = "KIRIM";
-            btn.disabled = false;
-        }
-    };
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+          alert("Keadilan telah ditegakkan! Laporan Anda berhasil terkirim.")
+          form.reset()
+          btnKirim.disabled = false
+          btnKirim.innerText = "KIRIM"
+      })
+      .catch(error => {
+          alert("Gagal mengirim! Coba lagi nanti.")
+          btnKirim.disabled = false
+          btnKirim.innerText = "KIRIM"
+      })
+  })
 </script>
 
 </body>
 </html>
+
 
 
 
