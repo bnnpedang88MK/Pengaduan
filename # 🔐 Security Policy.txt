@@ -1,0 +1,63 @@
+# 🔐 Security Policy
+
+Dokumen ini menjelaskan kebijakan keamanan dan cara melaporkan kerentanan (security vulnerability) pada project **Sistem Pengaduan Member Berbasis Web**.
+
+---
+
+## 📦 Supported Versions
+
+Versi project yang saat ini didukung untuk pembaruan keamanan:
+
+| Versi | Status |
+|------|--------|
+| v1.x | ✅ Supported |
+| < v1.0 | ❌ Not Supported |
+
+---
+
+## 🚨 Reporting a Vulnerability
+
+Jika Anda menemukan celah keamanan, mohon **jangan mempublikasikannya secara langsung**.
+
+Silakan laporkan melalui salah satu cara berikut:
+
+- 📧 Email: **admin@pd88.internal** *(ganti sesuai email Anda)*
+- 💬 Telegram: **@admin_pd88** *(opsional)*
+
+Saat melaporkan, sertakan:
+1. Deskripsi singkat kerentanan
+2. Langkah reproduksi (jika memungkinkan)
+3. Dampak potensial
+4. Screenshot atau bukti pendukung (opsional)
+
+Kami akan meninjau laporan Anda secepat mungkin.
+
+---
+
+## 🛡️ Praktik Keamanan yang Diterapkan
+
+Project ini menerapkan beberapa praktik keamanan dasar, antara lain:
+
+- 🔒 Token Telegram **tidak disimpan di frontend**
+- 🔑 Google Apps Script dijalankan sebagai **Owner (Execute as: Me)**
+- 🧾 Data hanya disimpan ke Google Sheets milik admin
+- 📁 Folder Google Drive disarankan hanya **Viewer**
+- 🚫 Tidak ada data sensitif (password, OTP) yang dikumpulkan
+
+---
+
+## ⚠️ Catatan Penting
+
+- Jangan commit **TOKEN Telegram** ke repository public
+- Gunakan repository **Private** jika memungkinkan
+- Batasi akses Google Drive & Spreadsheet
+- Validasi input tambahan disarankan untuk produksi
+- Sistem ini **tidak dirancang untuk data finansial sensitif**
+
+---
+
+## 🧪 Disclosure Policy
+
+Jika kerentanan dikonfirmasi:
+- Kami akan memperbaiki secepat mungkin
+- Tidak ada tindakan hukum terhad
