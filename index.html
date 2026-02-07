@@ -167,34 +167,70 @@
 </div>
 
 <script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwEsUWSXjaKqeR38fy0NFWjbEAO_YzEDQSvAQkruxXNs--PmAizRHT5nrxW2umgh3y7/exec';
-const form = document.getElementById('pengaduan-form');
+<script>
+  // GANTI URL INI DENGAN URL WEB APP KAMU
+  const scriptURL = https://script.google.com/macros/s/AKfycbwEsUWSXjaKqeR38fy0NFWjbEAO_YzEDQSvAQkruxXNs--PmAizRHT5nrxW2umgh3y7/exec';
+  const form = document.getElementById('pengaduan-form');
+  const btnKirim = document.getElementById('btn-kirim');
+  const fileInput = document.getElementById('fileInput');
 
-form.addEventListener('submit', e => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btnKirim = document.getElementById('btn-kirim');
+    
+    // 1. Kunci Tombol agar tidak klik dua kali
     btnKirim.disabled = true;
     btnKirim.innerText = "MENGIRIM...";
 
-    // Mengambil semua data form secara otomatis
+    let imageB64 = "";
+    const file = fileInput.files[0];
+
+    // 2. Jika ada gambar, ubah jadi teks (Base64)
+    if (file) {
+      const reader = new FileReader();
+      imageB64 = await new Promise((resolve) => {
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // 3. Ambil data Form secara manual untuk memastikan 'name' cocok dengan Sheets
+    const formData = {
+      timestamp: new Date().toLocaleString(),
+      kategori: form.kategori.value,
+      username: form.username.value,
+      whatsapp: form.whatsapp.value,
+      keluhan: form.keluhan.value,
+      bukti: imageB64 // Pastikan di Sheets ada kolom bernama 'bukti'
+    };
+
+    // 4. Kirim Data
     fetch(scriptURL, { 
-        method: 'POST', 
-        body: new FormData(form) // Mengirim langsung sebagai FormData
+      method: 'POST', 
+      mode: 'no-cors', // Menghindari masalah CORS di GitHub Pages
+      body: JSON.stringify(formData) 
     })
-    .then(response => {
-        alert("Laporan Berhasil Terkirim!");
-        form.reset();
+    .then(() => {
+      alert("Laporan Berhasil Terkirim! Keadilan ditegakkan.");
+      form.reset();
+      // Jika ada preview gambar, sembunyikan kembali
+      const preview = document.getElementById('preview-img');
+      if(preview) preview.style.display = 'none';
     })
-    .catch(error => alert("Gagal kirim!"))
+    .catch(error => {
+      alert("Terjadi kesalahan! Coba cek koneksi internet.");
+      console.error('Error!', error.message);
+    })
     .finally(() => {
-        btnKirim.disabled = false;
-        btnKirim.innerText = "KIRIM";
+      btnKirim.disabled = false;
+      btnKirim.innerText = "KIRIM";
     });
-});
+  });
+</script>
 </script>
 
 </body>
 </html>
+
 
 
 
