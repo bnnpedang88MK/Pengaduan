@@ -49,7 +49,7 @@ Access: Anyone
 
 Salin Web App URL
 
-🌐 Web Form
+🌐bnnpedang88mk.github.io/Pengaduan/
 
 Ganti URL webhook di file HTML:
 
