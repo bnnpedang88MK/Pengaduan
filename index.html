@@ -83,7 +83,7 @@
 
         /* Perubahan warna saat mouse memilih/klik */
         select:focus, input:focus, textarea:focus {
-            border-color: var(--focus-greend);
+            border-color: var(--focus-green);
             background-color: var(--focus-green);
             box-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
         }
@@ -135,117 +135,103 @@
     </div>
 
     <form id="complaintForm">
-        <label>KATEGORI KENDALA</label>
-        <select id="kategori" required>
-            <option value="" disabled selected>Pilih kategori...</option>
-            <option>Deposit tidak diproses</option>
-            <option>Withdraw tidak dibayar</option>
-            <option>Tidak Ada LiveChat</option>
-            <option>Pelayanan Customer Service</option>
-            <option>Laporan Kecurangan pemain</option>
-        </select>
+  <label>KATEGORI KENDALA</label>
+  <select id="kategori" name="kategori" required>
+    <option value="" disabled selected>Pilih kategori...</option>
+    <option>Deposit tidak diproses</option>
+    <option>Withdraw tidak dibayar</option>
+    <option>Tidak Ada LiveChat</option>
+    <option>Pelayanan Customer Service</option>
+    <option>Laporan Kecurangan pemain</option>
+  </select>
 
-        <label>USERNAME PLAYER</label>
-        <input type="text" id="username" placeholder="Masukkan Username Anda" required>
+  <label>USERNAME PLAYER</label>
+  <input type="text" id="username" name="username" required>
 
-        <label>NOMOR WHATSAPP</label>
-        <input type="number" id="whatsapp" placeholder="Contoh: 08123456789" required>
+  <label>NOMOR WHATSAPP</label>
+  <input type="tel" id="whatsapp" name="whatsapp" required>
 
-        <label>DETAIL KELUHAN</label>
-        <textarea id="keluhan" rows="3" placeholder="Jelaskan masalah Anda secara lengkap..." required></textarea>
+  <label>DETAIL KELUHAN</label>
+  <textarea id="keluhan" name="keluhan" rows="3" required></textarea>
 
-        <label>BUKTI SCREENSHOT</label>
-<input type="file" id="fileInput" name="buktiFile" accept="image/*" hidden>
-        
-<label for="fileInput" class="upload-area">
-  <span style="font-size: 24px;">📸</span>
-  <p style="margin: 5px 0; color: #aaa; font-size: 12px;">Tap untuk upload bukti</p>
-  <img id="preview-img" src="" style="display:none; max-width:220px; border-radius:10px; margin-top:10px;">
-</label>
+  <label>BUKTI SCREENSHOT</label>
+  <input type="file" id="fileInput" accept="image/*" hidden>
+  <label for="fileInput" class="upload-area">
+    <span style="font-size: 24px;">📸</span>
+    <p style="margin: 5px 0; color: #aaa; font-size: 12px;">Tap untuk upload bukti</p>
+    <img id="preview-img" src="" style="display:none; max-width:220px; border-radius:10px; margin-top:10px;">
+  </label>
 
-<button type="submit" id="submitBtn" class="btn-submit">KIRIM</button>
+  <button type="submit" id="btn-kirim" class="btn-submit">KIRIM</button>
+</form>
 
-    </form>
 </div>
   <script>
   // GANTI URL INI DENGAN URL WEB APP KAMU
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbwEsUWSXjaKqeR38fy0NFWjbEAO_YzEDQSvAQkruxXNs--PmAizRHT5nrxW2umgh3y7/exec';
+      
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyck3K8BDge0jSIrS-yBe0jiU2QqS7TLKULaSCebSWRKKt_6wMlTlKA8wVc59aPdhb5/exec';
+const form = document.getElementById('complaintForm');
+const btnKirim = document.getElementById('btn-kirim');
+const fileInput = document.getElementById('fileInput');
+const preview = document.getElementById('preview-img');
 
-  const form = document.getElementById('pengaduan-form');
-  const btnKirim = document.getElementById('submitBtn');
-  const fileInput = document.getElementById('fileInput');
-  const preview = document.getElementById('preview-img');
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  if (!file) { preview.style.display = 'none'; preview.src = ''; return; }
+  const reader = new FileReader();
+  reader.onload = () => { preview.src = reader.result; preview.style.display = 'block'; };
+  reader.readAsDataURL(file);
+});
 
-  // Preview gambar saat dipilih
-  fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (!file) {
-      preview.style.display = 'none';
-      preview.src = '';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      preview.src = reader.result;
-      preview.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  });
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  btnKirim.disabled = true;
+  btnKirim.innerText = 'MENGIRIM...';
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  let imageB64 = '';
+  const file = fileInput.files[0];
+  if (file) {
+    imageB64 = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
 
-    btnKirim.disabled = true;
-    btnKirim.innerText = "MENGIRIM...";
+  const payload = {
+    timestamp: new Date().toISOString(),
+    kategori: document.getElementById('kategori').value,
+    username: document.getElementById('username').value,
+    whatsapp: document.getElementById('whatsapp').value,
+    keluhan: document.getElementById('keluhan').value,
+    bukti: imageB64
+  };
 
-    let imageB64 = "";
-    const file = fileInput.files[0];
+  try {
+    await fetch(scriptURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+    });
 
-    // Jika ada gambar, ubah jadi base64
-    if (file) {
-      imageB64 = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // Pastikan field form kamu PUNYA name="" yang sesuai
-    const payload = {
-      timestamp: new Date().toISOString(),
-      kategori: form.kategori?.value || "",
-      username: form.username?.value || "",
-      whatsapp: form.whatsapp?.value || "",
-      keluhan: form.keluhan?.value || "",
-      bukti: imageB64
-    };
-
-    try {
-      await fetch(scriptURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      });
-
-      alert("Laporan berhasil terkirim.");
-      form.reset();
-      preview.style.display = 'none';
-      preview.src = '';
-    } catch (err) {
-      console.error(err);
-      alert("Gagal mengirim. Coba lagi.");
-    } finally {
-      btnKirim.disabled = false;
-      btnKirim.innerText = "KIRIM";
-    }
-  });
-</script>
-
+    alert('Laporan berhasil terkirim.');
+    form.reset();
+    preview.style.display = 'none';
+    preview.src = '';
+  } catch (err) {
+    console.error(err);
+    alert('Gagal mengirim. Coba lagi.');
+  } finally {
+    btnKirim.disabled = false;
+    btnKirim.innerText = 'KIRIM';
+  }
+});
 </script>
 
 </body>
 </html>
+
 
 
 
