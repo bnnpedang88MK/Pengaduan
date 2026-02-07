@@ -155,81 +155,98 @@
         <textarea id="keluhan" rows="3" placeholder="Jelaskan masalah Anda secara lengkap..." required></textarea>
 
         <label>BUKTI SCREENSHOT</label>
-        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-            <span style="font-size: 24px;">📸</span>
-            <p style="margin: 5px 0; color: #aaa; font-size: 12px;">Tap untuk upload bukti</p>
-            <input type="file" id="fileInput" accept="image/*" style="display: none;">
-            <img id="preview-img" src="">
-        </div>
+<input type="file" id="fileInput" name="buktiFile" accept="image/*" hidden>
+        
+<label for="fileInput" class="upload-area">
+  <span style="font-size: 24px;">📸</span>
+  <p style="margin: 5px 0; color: #aaa; font-size: 12px;">Tap untuk upload bukti</p>
+  <img id="preview-img" src="" style="display:none; max-width:220px; border-radius:10px; margin-top:10px;">
+</label>
 
-        <button type="submit" id="submitBtn" class="btn-submit">KIRIM</button>
+<button type="submit" id="submitBtn" class="btn-submit">KIRIM</button>
+
     </form>
 </div>
-
-<script>
-<script>
+  <script>
   // GANTI URL INI DENGAN URL WEB APP KAMU
-  const scriptURL = https://script.google.com/macros/s/AKfycbwEsUWSXjaKqeR38fy0NFWjbEAO_YzEDQSvAQkruxXNs--PmAizRHT5nrxW2umgh3y7/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwEsUWSXjaKqeR38fy0NFWjbEAO_YzEDQSvAQkruxXNs--PmAizRHT5nrxW2umgh3y7/exec';
+
   const form = document.getElementById('pengaduan-form');
-  const btnKirim = document.getElementById('btn-kirim');
+  const btnKirim = document.getElementById('submitBtn');
   const fileInput = document.getElementById('fileInput');
+  const preview = document.getElementById('preview-img');
+
+  // Preview gambar saat dipilih
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) {
+      preview.style.display = 'none';
+      preview.src = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      preview.src = reader.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    // 1. Kunci Tombol agar tidak klik dua kali
+
     btnKirim.disabled = true;
     btnKirim.innerText = "MENGIRIM...";
 
     let imageB64 = "";
     const file = fileInput.files[0];
 
-    // 2. Jika ada gambar, ubah jadi teks (Base64)
+    // Jika ada gambar, ubah jadi base64
     if (file) {
-      const reader = new FileReader();
-      imageB64 = await new Promise((resolve) => {
+      imageB64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
         reader.readAsDataURL(file);
       });
     }
 
-    // 3. Ambil data Form secara manual untuk memastikan 'name' cocok dengan Sheets
-    const formData = {
-      timestamp: new Date().toLocaleString(),
-      kategori: form.kategori.value,
-      username: form.username.value,
-      whatsapp: form.whatsapp.value,
-      keluhan: form.keluhan.value,
-      bukti: imageB64 // Pastikan di Sheets ada kolom bernama 'bukti'
+    // Pastikan field form kamu PUNYA name="" yang sesuai
+    const payload = {
+      timestamp: new Date().toISOString(),
+      kategori: form.kategori?.value || "",
+      username: form.username?.value || "",
+      whatsapp: form.whatsapp?.value || "",
+      keluhan: form.keluhan?.value || "",
+      bukti: imageB64
     };
 
-    // 4. Kirim Data
-    fetch(scriptURL, { 
-      method: 'POST', 
-      mode: 'no-cors', // Menghindari masalah CORS di GitHub Pages
-      body: JSON.stringify(formData) 
-    })
-    .then(() => {
-      alert("Laporan Berhasil Terkirim! Keadilan ditegakkan.");
+    try {
+      await fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+
+      alert("Laporan berhasil terkirim.");
       form.reset();
-      // Jika ada preview gambar, sembunyikan kembali
-      const preview = document.getElementById('preview-img');
-      if(preview) preview.style.display = 'none';
-    })
-    .catch(error => {
-      alert("Terjadi kesalahan! Coba cek koneksi internet.");
-      console.error('Error!', error.message);
-    })
-    .finally(() => {
+      preview.style.display = 'none';
+      preview.src = '';
+    } catch (err) {
+      console.error(err);
+      alert("Gagal mengirim. Coba lagi.");
+    } finally {
       btnKirim.disabled = false;
       btnKirim.innerText = "KIRIM";
-    });
+    }
   });
 </script>
+
 </script>
 
 </body>
 </html>
+
 
 
 
