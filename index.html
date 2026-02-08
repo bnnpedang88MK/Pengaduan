@@ -1,243 +1,352 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PD88 - Pusat Pengaduan Member</title>
-    <style>
-        :root {
-            --neon-green: #39ff14;
-            --neon-glow: 0 0 15px #39ff14, 0 0 30px #39ff14;
-            --soft-green: #2d6a4f; 
-            --dark-bg: #06110d;
-            --gray-input: #333333; /* Abu-abu untuk dropdown */
-            --focus-green: #2d6a4f; /* hijau saat dipilih */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PD88 - Pusat Pengaduan Member</title>
 
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--dark-bg);
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; overflow-x: hidden;
-            background-image: url('https://w0.peakpx.com/wallpaper/434/914/HD-wallpaper-luffy-and-zoro-new-year-luffy-one-piece-anime-zoro.jpg'); 
-            background-size: cover; background-position: center; background-attachment: fixed;
-        }
+  <style>
+    :root {
+      --neon-green: #39ff14;
+      --neon-glow: 0 0 15px #39ff14, 0 0 30px #39ff14;
+      --soft-green: #2d6a4f;
+      --dark-bg: #06110d;
+      --gray-input: #333333;
+      --focus-green: #2d6a4f;
+    }
 
-        .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 1; }
+    body {
+      margin: 0; padding: 0;
+      background-color: var(--dark-bg);
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh; overflow-x: hidden;
+      background-image: url('https://w0.peakpx.com/wallpaper/434/914/HD-wallpaper-luffy-and-zoro-new-year-luffy-one-piece-anime-zoro.jpg');
+      background-size: cover; background-position: center; background-attachment: fixed;
+    }
 
-        /* TEKS IKLAN BERJALAN */
-        .running-text {
-            position: relative; z-index: 3;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            border-bottom: 2px solid var(--neon-green);
-            color: var(--neon-green);
-            padding: 12px 0;
-            font-weight: 900;
-            text-transform: uppercase;
-            box-shadow: var(--neon-glow);
-        }
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1;
+    }
 
-        .site-logo {
-            position: relative; z-index: 3;
-            margin-top: 20px;
-            max-width: 180px;
-            height: auto;
-        }
+    .running-text {
+      position: relative; z-index: 3;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      border-bottom: 2px solid var(--neon-green);
+      color: var(--neon-green);
+      padding: 12px 0;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: var(--neon-glow);
+    }
 
-        .container {
-            position: relative; z-index: 2;
-            width: 100%; max-width: 500px;
-            background: rgba(10, 10, 10, 0.95);
-            border: 3px solid var(--neon-green);
-            box-shadow: var(--neon-glow);
-            border-radius: 20px;
-            padding: 25px; margin: 20px;
-        }
+    .site-logo {
+      position: relative; z-index: 3;
+      margin-top: 20px;
+      max-width: 180px;
+      height: auto;
+    }
 
-        .header-text {
-            color: #fff; font-size: 13px; font-style: italic;
-            border-left: 4px solid var(--neon-green);
-            padding-left: 15px; margin-bottom: 25px; line-height: 1.6;
-        }
+    .container {
+      position: relative; z-index: 2;
+      width: 100%; max-width: 500px;
+      background: rgba(10, 10, 10, 0.95);
+      border: 3px solid var(--neon-green);
+      box-shadow: var(--neon-glow);
+      border-radius: 20px;
+      padding: 25px; margin: 20px;
+    }
 
-        h2 {
-            color: var(--neon-green); text-align: center;
-            text-transform: uppercase; letter-spacing: 2px;
-            margin-top: 0; text-shadow: 0 0 10px var(--neon-green);
-        }
+    .header-text {
+      color: #fff; font-size: 13px; font-style: italic;
+      border-left: 4px solid var(--neon-green);
+      padding-left: 15px; margin-bottom: 25px; line-height: 1.6;
+    }
 
-        label { color: var(--neon-green); display: block; margin-bottom: 8px; font-weight: bold; font-size: 12px; }
+    h2 {
+      color: var(--neon-green);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 0;
+      text-shadow: 0 0 10px var(--neon-green);
+    }
 
-        /* STYLE DROPDOWN & INPUT */
-        input, select, textarea {
-            width: 100%; padding: 12px; 
-            background-color: var(--gray-input); /* Abu-abu */
-            border: 1px solid #444; 
-            border-radius: 8px; 
-            color: white; /* Teks Putih */
-            margin-bottom: 15px; font-size: 15px; outline: none;
-            transition: 0.3s;
-        }
+    label {
+      color: var(--neon-green);
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 12px;
+    }
 
-        /* Perubahan warna saat mouse memilih/klik */
-        select:focus, input:focus, textarea:focus {
-            border-color: var(--focus-green);
-            background-color: var(--focus-green);
-            box-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
-        }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--gray-input);
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: white;
+      margin-bottom: 15px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+      box-sizing: border-box;
+    }
 
-        option { background: #333; color: white; }
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--focus-green);
+      background-color: var(--focus-green);
+      box-shadow: 0 0 10px rgba(0, 255, 195, 0.5);
+    }
 
-        .upload-area {
-            border: 2px dashed var(--neon-green);
-            background: rgba(57, 255, 20, 0.05);
-            padding: 15px; text-align: center; border-radius: 12px; cursor: pointer;
-        }
+    option { background: #333; color: white; }
 
-        #preview-img {
-            max-width: 100%; max-height: 150px; margin-top: 10px;
-            display: none; border-radius: 8px; border: 1px solid var(--neon-green);
-            margin-inline: auto;
-        }
+    .upload-area {
+      border: 2px dashed var(--neon-green);
+      background: rgba(57, 255, 20, 0.05);
+      padding: 15px;
+      text-align: center;
+      border-radius: 12px;
+      cursor: pointer;
+      display: block;
+      user-select: none;
+    }
 
-        .btn-submit {
-            width: 100%; padding: 16px; 
-            background-color: var(--soft-green); 
-            color: white; border: none; border-radius: 10px;
-            font-weight: 900; font-size: 18px; cursor: pointer;
-            margin-top: 10px; text-transform: uppercase;
-        }
+    #preview-img {
+      max-width: 100%;
+      max-height: 150px;
+      margin-top: 10px;
+      display: none;
+      border-radius: 8px;
+      border: 1px solid var(--neon-green);
+      margin-inline: auto;
+    }
 
-        .btn-submit:disabled { background-color: #555; cursor: not-allowed; }
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background-color: var(--soft-green);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 900;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
 
-        @media (max-width: 480px) { .container { padding: 20px; } }
-    </style>
+    .btn-submit:disabled { background-color: #555; cursor: not-allowed; }
+
+    @media (max-width: 480px) { .container { padding: 20px; } }
+
+    /* ===== POPUP (ganti alert) ===== */
+    .popup{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.75);
+      z-index: 9999;
+    }
+    .popup.show{ display: flex; }
+
+    .popup-box{
+      width: min(420px, 90vw);
+      background: rgba(10,10,10,.95);
+      border: 2px solid var(--neon-green);
+      border-radius: 16px;
+      padding: 18px 18px 14px;
+      box-shadow: 0 0 20px rgba(57,255,20,.55);
+      color: #eaffea;
+      text-align: center;
+    }
+    .popup-box h3{
+      margin: 0 0 10px;
+      color: var(--neon-green);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .popup-box p{
+      margin: 0 0 14px;
+      line-height: 1.5;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .popup-btn{
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--soft-green);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="overlay"></div>
 
-<div class="overlay"></div>
-
-<div class="running-text">
+  <div class="running-text">
     <marquee scrollamount="6">
-        🧧 GONG XI FA CAI! SELAMAT MERAYAKAN IMLEK 🧧 • ADA KENDALA? JANGAN RAGU MENGHUBUNGI KAMI. SETIAP PENGADUAN AKAN DITINDAKLANJUTI SECEPAT MUNGKIN • SAMPAIKAN KELUHAN ANDA. KAMI SIAP MENANGANI DENGAN CEPAT DAN RESPONSIF.
+      🧧 GONG XI FA CAI! SELAMAT MERAYAKAN IMLEK 🧧 • ADA KENDALA DI PEDANG88? JANGAN RAGU MENGHUBUNGI KAMI. SETIAP PENGADUAN AKAN DITINDAKLANJUTI SECEPAT MUNGKIN • SAMPAIKAN KELUHAN ANDA. PEDANG88 SIAP MENANGANI DENGAN CEPAT DAN RESPONSIF.
     </marquee>
-</div>
+  </div>
 
-<img src="https://media.afbcdn.xyz/SiteLogo/1470/PD88%20desktop.png" alt="Logo PD88" class="site-logo">
+  <img src="https://media.afbcdn.xyz/SiteLogo/1470/PD88%20desktop.png" alt="Logo PD88" class="site-logo">
 
-<div class="container">
+  <div class="container">
     <h2>🧧 BATTLE REPORT 🧧</h2>
-    
+
     <div class="header-text">
-        "Keadilan harus ditegakkan!" - Sampaikan keluhan Anda, biar tim pusat yang menyelesaikannya dengan cepat dan adil.
+      "Keadilan harus ditegakkan!" - Sampaikan keluhan Anda, biar tim pusat PEDANG88 yang menyelesaikannya dengan cepat dan adil.
     </div>
 
     <form id="complaintForm">
-  <label>KATEGORI KENDALA</label>
-  <select id="kategori" name="kategori" required>
-    <option value="" disabled selected>Pilih kategori...</option>
-    <option>Deposit tidak diproses</option>
-    <option>Withdraw tidak dibayar</option>
-    <option>Tidak Ada LiveChat</option>
-    <option>Pelayanan Customer Service</option>
-    <option>Laporan Kecurangan pemain</option>
-  </select>
+      <label for="kategori">KATEGORI KENDALA</label>
+      <select id="kategori" name="kategori" autocomplete="off" required>
+        <option value="" disabled selected>Pilih kategori...</option>
+        <option>Deposit tidak diproses</option>
+        <option>Withdraw tidak dibayar</option>
+        <option>Tidak Ada LiveChat</option>
+        <option>Pelayanan Customer Service</option>
+        <option>Laporan Kecurangan pemain</option>
+      </select>
 
-  <label>USERNAME PLAYER</label>
-  <input type="text" id="username" name="username" required>
+      <label for="username">USERNAME PLAYER</label>
+      <input type="text" id="username" name="username" autocomplete="username" required>
 
-  <label>NOMOR WHATSAPP</label>
-  <input type="tel" id="whatsapp" name="whatsapp" required>
+      <label for="whatsapp">NOMOR WHATSAPP</label>
+      <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" required>
 
-  <label>DETAIL KELUHAN</label>
-  <textarea id="keluhan" name="keluhan" rows="3" required></textarea>
+      <label for="keluhan">DETAIL KELUHAN</label>
+      <textarea id="keluhan" name="keluhan" rows="3" autocomplete="off" required></textarea>
 
-  <label>BUKTI SCREENSHOT</label>
-  <input type="file" id="fileInput" accept="image/*" hidden>
-  <label for="fileInput" class="upload-area">
-    <span style="font-size: 24px;">📸</span>
-    <p style="margin: 5px 0; color: #aaa; font-size: 12px;">Tap untuk upload bukti</p>
-    <img id="preview-img" src="" style="display:none; max-width:220px; border-radius:10px; margin-top:10px;">
-  </label>
+      <label for="fileInput">BUKTI SCREENSHOT</label>
+      <input type="file" id="fileInput" name="buktiFile" accept="image/*" hidden>
+      <label for="fileInput" class="upload-area">
+        <span style="font-size: 24px;">📸</span>
+        <p style="margin: 5px 0; color: #aaa; font-size: 12px;">Tap untuk upload bukti</p>
+        <img id="preview-img" src="" alt="Preview Bukti">
+      </label>
 
-  <button type="submit" id="btn-kirim" class="btn-submit">KIRIM</button>
-</form>
+      <button type="submit" id="btn-kirim" class="btn-submit">KIRIM</button>
+    </form>
+  </div>
 
-</div>
+  <!-- ===== POPUP HTML (taruh di bawah, sebelum </body>) ===== -->
+  <div id="popup" class="popup">
+    <div class="popup-box">
+      <h3 id="popup-title">Notifikasi</h3>
+      <p id="popup-msg"></p>
+      <button type="button" class="popup-btn" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
+  <!-- ===== JS (paling bawah, aman) ===== -->
   <script>
-  // GANTI URL INI DENGAN URL WEB APP KAMU
-      
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyck3K8BDge0jSIrS-yBe0jiU2QqS7TLKULaSCebSWRKKt_6wMlTlKA8wVc59aPdhb5/exec';
-const form = document.getElementById('complaintForm');
-const btnKirim = document.getElementById('btn-kirim');
-const fileInput = document.getElementById('fileInput');
-const preview = document.getElementById('preview-img');
+    // 1) GANTI URL INI dengan Web App URL /exec kamu
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz_AkyTXDMZ2fdjDSCPLMDwuQRtJWsPC-mDPOZkfcoxQX4fhvfkEIQPWLvDAiaq2POo/exec';
 
-fileInput.addEventListener('change', () => {
-  const file = fileInput.files[0];
-  if (!file) { preview.style.display = 'none'; preview.src = ''; return; }
-  const reader = new FileReader();
-  reader.onload = () => { preview.src = reader.result; preview.style.display = 'block'; };
-  reader.readAsDataURL(file);
-});
+    const form = document.getElementById('complaintForm');
+    const btnKirim = document.getElementById('btn-kirim');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview-img');
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  btnKirim.disabled = true;
-  btnKirim.innerText = 'MENGIRIM...';
+    function openPopup(title, msg) {
+      document.getElementById('popup-title').textContent = title;
+      document.getElementById('popup-msg').textContent = msg;
+      document.getElementById('popup').classList.add('show');
+    }
+    function closePopup() {
+      document.getElementById('popup').classList.remove('show');
+    }
 
-  let imageB64 = '';
-  const file = fileInput.files[0];
-  if (file) {
-    imageB64 = await new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload = () => resolve(r.result);
-      r.onerror = reject;
-      r.readAsDataURL(file);
+    // Klik area gelap untuk tutup popup (opsional)
+    document.getElementById('popup').addEventListener('click', (e) => {
+      if (e.target.id === 'popup') closePopup();
     });
-  }
 
-  const payload = {
-    timestamp: new Date().toISOString(),
-    kategori: document.getElementById('kategori').value,
-    username: document.getElementById('username').value,
-    whatsapp: document.getElementById('whatsapp').value,
-    keluhan: document.getElementById('keluhan').value,
-    bukti: imageB64
-  };
+    // Preview gambar
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) { preview.style.display = 'none'; preview.src = ''; return; }
 
-  try {
-  await fetch(scriptURL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify(payload),
-  });
+      const reader = new FileReader();
+      reader.onload = () => {
+        preview.src = reader.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
 
-  alert('Terkirim. Silakan cek Sheet/Drive (refresh 5-10 detik).');
-  form.reset();
-  preview.style.display = 'none';
-  preview.src = '';
-} catch (err) {
-  console.error(err);
-  alert('Gagal mengirim (koneksi/browser). Coba lagi.');
-} finally {
-  btnKirim.disabled = false;
-  btnKirim.innerText = 'KIRIM';
-}
+    // Submit form
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-});
-</script>
+      btnKirim.disabled = true;
+      btnKirim.innerText = 'MENGIRIM...';
 
+      let imageB64 = '';
+      const file = fileInput.files[0];
+
+      if (file) {
+        imageB64 = await new Promise((resolve, reject) => {
+          const r = new FileReader();
+          r.onload = () => resolve(r.result);
+          r.onerror = reject;
+          r.readAsDataURL(file);
+        });
+      }
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        kategori: document.getElementById('kategori').value,
+        username: document.getElementById('username').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        keluhan: document.getElementById('keluhan').value,
+        bukti: imageB64
+      };
+
+      try {
+        await fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify(payload),
+        });
+
+        openPopup(
+          'Ksatria Pedang88',
+          'Pedang keadilan telah terhunus.\n' +
+          'Ksatria Pedang88 menerima pengaduanmu dan bersumpah menegakkan kebenaran.\n' +
+          'Tidak ada laporan yang diabaikan. Tidak ada keadilan yang ditunda.'
+        );
+
+        form.reset();
+        fileInput.value = '';
+        preview.style.display = 'none';
+        preview.src = '';
+
+      } catch (err) {
+        console.error(err);
+        openPopup(
+          'Ksatria Pedang88',
+          'Pengiriman tertahan oleh badai jaringan.\n' +
+          'Tenang, coba kirim lagi ya.'
+        );
+      } finally {
+        btnKirim.disabled = false;
+        btnKirim.innerText = 'KIRIM';
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
