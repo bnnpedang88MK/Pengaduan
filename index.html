@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PD88 - Pusat Pengaduan Member</title>
-
+  
   <style>
     :root {
       --neon-green: #39ff14;
@@ -254,99 +254,108 @@
   <!-- ===== JS (paling bawah, aman) ===== -->
   <script>
     // 1) GANTI URL INI dengan Web App URL /exec kamu
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz_AkyTXDMZ2fdjDSCPLMDwuQRtJWsPC-mDPOZkfcoxQX4fhvfkEIQPWLvDAiaq2POo/exec';
+const scriptURL = 'https://bnnpdgmk.app.n8n.cloud/webhook/pengaduan-pedang88'; // URL webhook n8n
 
-    const form = document.getElementById('complaintForm');
-    const btnKirim = document.getElementById('btn-kirim');
-    const fileInput = document.getElementById('fileInput');
-    const preview = document.getElementById('preview-img');
+const form = document.getElementById('complaintForm');
+const btnKirim = document.getElementById('btn-kirim');
+const fileInput = document.getElementById('fileInput');
+const preview = document.getElementById('preview-img');
 
-    function openPopup(title, msg) {
-      document.getElementById('popup-title').textContent = title;
-      document.getElementById('popup-msg').textContent = msg;
-      document.getElementById('popup').classList.add('show');
+function openPopup(title, msg) {
+  document.getElementById('popup-title').textContent = title;
+  document.getElementById('popup-msg').textContent = msg;
+  document.getElementById('popup').classList.add('show');
+}
+
+function closePopup() {
+  document.getElementById('popup').classList.remove('show');
+}
+
+// Klik area gelap untuk tutup popup (opsional)
+document.getElementById('popup').addEventListener('click', (e) => {
+  if (e.target.id === 'popup') closePopup();
+});
+
+// Preview gambar
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  if (!file) { preview.style.display = 'none'; preview.src = ''; return; }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    preview.src = reader.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+// Submit form
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  btnKirim.disabled = true;
+  btnKirim.innerText = 'MENGIRIM...';
+
+  let imageB64 = '';
+  const file = fileInput.files[0];
+
+  if (file) {
+    imageB64 = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = reject;
+      r.readAsDataURL(file);
+    });
+  }
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    kategori: document.getElementById('kategori').value,
+    nama: document.getElementById('username').value,
+    whatsapp: document.getElementById('whatsapp').value,
+    judul_pengaduan: document.getElementById('keluhan').value,
+    detail_pengaduan: document.getElementById('keluhan').value,
+    gambar_bukti: imageB64
+  };
+
+  try {
+    const response = await fetch(scriptURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      openPopup(
+        'Ksatria Pedang88',
+        'Pedang keadilan telah terhunus.\n' +
+        'Ksatria Pedang88 menerima pengaduanmu dan bersumpah menegakkan kebenaran.\n' +
+        'Tidak ada laporan yang diabaikan. Tidak ada keadilan yang ditunda.'
+      );
+
+      form.reset();
+      fileInput.value = '';
+      preview.style.display = 'none';
+      preview.src = '';
+    } else {
+      throw new Error('Gagal mengirim');
     }
-    function closePopup() {
-      document.getElementById('popup').classList.remove('show');
-    }
 
-    // Klik area gelap untuk tutup popup (opsional)
-    document.getElementById('popup').addEventListener('click', (e) => {
-      if (e.target.id === 'popup') closePopup();
-    });
-
-    // Preview gambar
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files[0];
-      if (!file) { preview.style.display = 'none'; preview.src = ''; return; }
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        preview.src = reader.result;
-        preview.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // Submit form
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      btnKirim.disabled = true;
-      btnKirim.innerText = 'MENGIRIM...';
-
-      let imageB64 = '';
-      const file = fileInput.files[0];
-
-      if (file) {
-        imageB64 = await new Promise((resolve, reject) => {
-          const r = new FileReader();
-          r.onload = () => resolve(r.result);
-          r.onerror = reject;
-          r.readAsDataURL(file);
-        });
-      }
-
-      const payload = {
-        timestamp: new Date().toISOString(),
-        kategori: document.getElementById('kategori').value,
-        username: document.getElementById('username').value,
-        whatsapp: document.getElementById('whatsapp').value,
-        keluhan: document.getElementById('keluhan').value,
-        bukti: imageB64
-      };
-
-      try {
-        await fetch(scriptURL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: JSON.stringify(payload),
-        });
-
-        openPopup(
-          'Ksatria Pedang88',
-          'Pedang keadilan telah terhunus.\n' +
-          'Ksatria Pedang88 menerima pengaduanmu dan bersumpah menegakkan kebenaran.\n' +
-          'Tidak ada laporan yang diabaikan. Tidak ada keadilan yang ditunda.'
-        );
-
-        form.reset();
-        fileInput.value = '';
-        preview.style.display = 'none';
-        preview.src = '';
-
-      } catch (err) {
-        console.error(err);
-        openPopup(
-          'Ksatria Pedang88',
-          'Pengiriman tertahan oleh badai jaringan.\n' +
-          'Tenang, coba kirim lagi ya.'
-        );
-      } finally {
-        btnKirim.disabled = false;
-        btnKirim.innerText = 'KIRIM';
-      }
-    });
+  } catch (err) {
+    console.error(err);
+    openPopup(
+      'Ksatria Pedang88',
+      'Pengiriman tertahan oleh badai jaringan.\n' +
+      'Tenang, coba kirim lagi ya.'
+    );
+  } finally {
+    btnKirim.disabled = false;
+    btnKirim.innerText = 'KIRIM';
+  }
+});
   </script>
 </body>
 </html>
+
