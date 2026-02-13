@@ -192,85 +192,91 @@
 
     <script>
         // --- JAVASCRIPT ---
-        const N8N_WEBHOOK_URL = "https://maketingpedang88.app.n8n.cloud/webhook-test/battle-report"; 
+<script>
+    const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzyI-ZrC2JsTx4qYgdktWZOA3b5gq1O4--icopKO5AsYf1YA_ldjB2XhLRmzmO4B_el/exec";
 
-        const form = document.getElementById("complaintForm");
-        const fileInput = document.getElementById("fileInput");
-        const previewImg = document.getElementById("preview-img");
-        const statusEl = document.getElementById("status");
-        const btn = document.getElementById("submitBtn");
+    const form = document.getElementById("complaintForm");
+    const fileInput = document.getElementById("fileInput");
+    const previewImg = document.getElementById("preview-img");
+    const statusEl = document.getElementById("status");
+    const btn = document.getElementById("submitBtn");
 
-        // Preview Gambar
-        fileInput.addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    previewImg.style.display = "block";
-                }
-                reader.readAsDataURL(file);
-            } else {
+    // Preview gambar
+    fileInput.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImg.src = e.target.result;
+                previewImg.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewImg.style.display = "none";
+        }
+    });
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const file = fileInput.files[0];
+
+        // 🔥 WAJIB SCREENSHOT
+        if (!file) {
+            statusEl.style.color = "red";
+            statusEl.textContent = "❌ Bukti screenshot wajib diupload.";
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            statusEl.style.color = "red";
+            statusEl.textContent = "❌ Ukuran foto terlalu besar (Max 5MB)";
+            return;
+        }
+
+        btn.disabled = true;
+        const btnText = btn.innerText;
+        btn.innerText = "SEDANG MENGIRIM...";
+        statusEl.style.color = "yellow";
+        statusEl.textContent = "⏳ Mohon tunggu sebentar...";
+
+        try {
+            const formData = new FormData();
+            formData.append("kategori", document.getElementById("kategori").value);
+            formData.append("username", document.getElementById("username").value);
+            formData.append("whatsapp", document.getElementById("whatsapp").value);
+            formData.append("keluhan", document.getElementById("keluhan").value);
+            formData.append("file", file);
+
+            const response = await fetch(WEBHOOK_URL, {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                statusEl.style.color = "#0f0";
+                statusEl.textContent = "✅ Laporan BERHASIL dikirim! Terima kasih.";
+                form.reset();
                 previewImg.style.display = "none";
-            }
-        });
-
-        // Submit Logic
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const file = fileInput.files[0];
-            if (file && file.size > 5 * 1024 * 1024) {
-                statusEl.style.color = "red";
-                statusEl.textContent = "❌ Ukuran foto terlalu besar (Max 5MB)";
-                return;
+                previewImg.src = "";
+            } else {
+                throw new Error("Server Error");
             }
 
-            statusEl.textContent = "";
-            btn.disabled = true;
-            const btnOriginalText = btn.innerText;
-            btn.innerText = "SEDANG MENGIRIM...";
-            statusEl.style.color = "yellow";
-            statusEl.textContent = "⏳ Mohon tunggu sebentar...";
+        } catch (error) {
+            console.error(error);
+            statusEl.style.color = "red";
+            statusEl.textContent = "❌ Gagal terkirim. Cek koneksi internet Anda.";
+        } finally {
+            btn.disabled = false;
+            btn.innerText = btnText;
+        }
+    });
+</script>
 
-            try {
-                const formData = new FormData();
-                formData.append("kategori", document.getElementById("kategori").value);
-                formData.append("username", document.getElementById("username").value);
-                formData.append("whatsapp", document.getElementById("whatsapp").value);
-                formData.append("keluhan", document.getElementById("keluhan").value);
-                
-                if (file) {
-                    formData.append("file", file);
-                }
-
-                const response = await fetch(N8N_WEBHOOK_URL, {
-                    method: "POST",
-                    body: formData
-                });
-
-                if (response.ok) {
-                    statusEl.style.color = "#0f0";
-                    statusEl.textContent = "✅ Laporan BERHASIL dikirim! Terima kasih.";
-                    form.reset();
-                    previewImg.style.display = "none";
-                    previewImg.src = "";
-                } else {
-                    throw new Error("Gagal respon server.");
-                }
-
-            } catch (error) {
-                console.error(error);
-                statusEl.style.color = "red";
-                statusEl.textContent = "❌ Gagal terkirim. Cek koneksi internet Anda.";
-            } finally {
-                btn.disabled = false;
-                btn.innerText = btnOriginalText;
-            }
-        });
-    </script>
 </body>
 </html>
+
 
 
 
