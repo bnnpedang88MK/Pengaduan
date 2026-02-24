@@ -146,6 +146,7 @@
         .btn-submit:disabled { background: #555; color: #999; cursor: not-allowed; box-shadow: none; }
 
         #status { margin-top: 15px; text-align: center; font-weight: bold; }
+        main { display: block; }
     </style>
 </head>
 <body>
@@ -158,12 +159,13 @@
     </div>
 
     <!-- LOGO -->
-    <div class="logo-container">
+    <header class="logo-container">
         <img src="https://media.afbcdn.xyz/SiteLogo/1470/PD88%20desktop.png" alt="Logo PD88" class="site-logo">
-    </div>
+   </header>
 
     <!-- CONTAINER FORM -->
-    <div class="container">
+     <main>
+     <div class="container">
         <h2>🧧 BATTLE REPORT 🧧</h2>
         <div class="header-text">
             "Keadilan harus ditegakkan!" - Sampaikan keluhan Anda, biar tim pusat yang menyelesaikannya dengan cepat dan adil.
@@ -198,12 +200,13 @@
                 <img id="preview-img" src="" alt="Preview Bukti">
             </label>
 
-            <input type="file" id="fileInput" accept="image/*">
+           <input type="file" id="fileInput" accept="image/*" required>
 
             <button type="submit" id="submitBtn" class="btn-submit">KIRIM LAPORAN</button>
             <div id="status"></div>
         </form>
     </div>
+    </main>     
 
     <script>
         // --- JAVASCRIPT ---
