@@ -3,58 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pengaduan Resmi PEDANG88 | Laporan Deposit, Withdraw & CS</title>
-
-<link rel="canonical" href="https://formpd88.com/">
-<meta name="robots" content="index,follow">
-
-<meta name="description" content="Form pengaduan resmi PEDANG88. Laporkan kendala deposit, withdraw, livechat, dan pelayanan CS. Proses cepat dan responsif.">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="PEDANG88">
-<meta property="og:title" content="Form Pengaduan Resmi PEDANG88 | Laporan Deposit, Withdraw & CS">
-<meta property="og:description" content="Form pengaduan resmi PEDANG88. Laporkan kendala deposit, withdraw, livechat, dan pelayanan CS. Proses cepat dan responsif.">
-<meta property="og:url" content="https://formpd88.com/">    
-<meta property="og:image" content="https://i.ibb.co/TD2y6JHx/battle-report-pedang88.png">
-<meta name="twitter:card" content="summary_large_image">    
-
-
+    <title>Form Pengaduan PEDANG88</title>
     <style>
-        /* --- 1. BACKGROUND UTAMA --- */
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            
-            /* Gambar Background Terbaru */
-            background-image: url('https://i.ibb.co/TD2y6JHx/battle-report-pedang88.png');
-            
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            
-            color: #fff;
-            min-height: 100vh;
+            box-sizing: border-box;
         }
 
-        /* --- 2. RUNNING TEXT --- */
-        .running-text-container {
-            background-color: rgba(0, 0, 0, 0.8);
-            border-bottom: 2px solid #0f0;
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #065f46 0%, #022c22 100%);
+            background-attachment: fixed;
+            color: white;
+        }
+
+        /* Running Text */
+        .marquee-container {
+            background: rgba(6, 78, 59, 0.9);
+            border-bottom: 2px solid #d4af37;
             overflow: hidden;
             white-space: nowrap;
             position: sticky;
             top: 0;
             z-index: 999;
             padding: 10px 0;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
-        .running-text-content {
+        .marquee-content {
             display: inline-block;
-            color: #0f0;
+            color: #d4af37;
             font-weight: bold;
-            padding-left: 100%;
             animation: marquee 20s linear infinite;
+            padding-left: 100%;
         }
 
         @keyframes marquee {
@@ -62,252 +45,455 @@
             100% { transform: translate(-100%, 0); }
         }
 
-        /* --- 3. CONTAINER --- */
-        .logo-container { text-align: center; margin-top: 20px; }
-        .site-logo { display: inline-block; max-width: 180px; filter: drop-shadow(0 0 5px #0f0); }
+        /* Header */
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-        .container {
+        header img {
+            max-width: 180px;
+            filter: drop-shadow(0 0 8px #d4af37);
+        }
+
+        /* Main Container */
+        main {
+            padding: 0 16px 80px;
+        }
+
+        .form-container {
             max-width: 500px;
             margin: 20px auto;
             padding: 20px;
-            -webkit-backdrop-filter: blur(8px); 
-            backdrop-filter: blur(8px);
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #0f0;
+            background: rgba(2, 44, 34, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid #d4af37;
             border-radius: 15px;
-            box-shadow: 0 0 15px #0f0;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
         }
 
-        h2 { text-align: center; color: #0f0; text-shadow: 0 0 5px #0f0; margin-top: 0; }
-        .header-text { text-align: center; font-style: italic; margin-bottom: 20px; font-size: 14px; color: #ddd; }
+        h1 {
+            text-align: center;
+            color: #d4af37;
+            font-size: 24px;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
 
-        /* --- 4. FORM INPUT --- */
-        label { display: block; margin-top: 10px; font-weight: bold; color: #0f0; font-size: 14px; }
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: rgba(255, 248, 220, 0.8);
+        }
 
-        .input-field {
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #d4af37;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        input, select, textarea {
             width: 100%;
             padding: 12px;
-            margin-top: 5px;
-            background-color: #222;
-            border: 1px solid #555;
+            margin-top: 4px;
+            background: rgba(6, 78, 59, 0.5);
+            border: 1px solid rgba(245, 158, 11, 0.3);
             color: white;
-            border-radius: 5px;
-            box-sizing: border-box;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
         }
-        .input-field:focus { outline: none; border-color: #0f0; box-shadow: 0 0 5px #0f0; }
 
-        /* --- 5. UPLOAD AREA --- */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        select option {
+            background: #022c22;
+        }
+
+        /* File Upload */
         .upload-area {
-            border: 2px dashed #0f0;
+            border: 2px dashed #d4af37;
             padding: 20px;
             text-align: center;
             cursor: pointer;
             border-radius: 8px;
             margin-top: 10px;
-            background-color: rgba(0, 255, 0, 0.05);
-            transition: 0.3s;
+            background: rgba(245, 158, 11, 0.05);
+            transition: all 0.3s;
         }
-        .upload-area:hover { background-color: rgba(0, 255, 0, 0.1); }
-        
-        .icon-camera { font-size: 30px; }
-        .text-upload { margin: 5px 0; color: #aaa; font-size: 12px; }
 
-        /* PERBAIKAN: Style display none dipindah ke sini agar VS Code senang */
-        #fileInput {
+        .upload-area:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .upload-area input {
             display: none;
         }
 
-        #preview-img {
+        .upload-icon {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 4px;
+            color: #d4af37;
+        }
+
+        .upload-text {
+            color: rgba(255, 248, 220, 0.6);
+            font-size: 12px;
+        }
+
+        .preview-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .preview-image {
             max-width: 100%;
             max-height: 200px;
-            display: none;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #555;
+            border-radius: 6px;
+            border: 1px solid rgba(245, 158, 11, 0.5);
         }
 
-        /* --- 6. TOMBOL & STATUS --- */
-        .btn-submit {
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            background: linear-gradient(45deg, #006400, #00ff00);
-            color: black;
+        .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: rgba(2, 44, 34, 0.9);
             border: none;
-            border-radius: 5px;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Status Message */
+        .status-message {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status-message.error {
+            display: block;
+            color: #f87171;
+        }
+
+        .status-message.success {
+            display: block;
+            color: #d4af37;
+        }
+
+        .status-message.loading {
+            display: block;
+            color: #fcd34d;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 20px;
+            background: linear-gradient(to right, #b8860b, #d4af37);
+            color: #022c22;
             font-weight: bold;
             font-size: 18px;
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 0 10px #0f0;
-            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s;
         }
-        .btn-submit:hover { transform: scale(1.02); box-shadow: 0 0 20px #0f0; }
-        .btn-submit:disabled { background: #555; color: #999; cursor: not-allowed; box-shadow: none; }
 
-        #status { margin-top: 15px; text-align: center; font-weight: bold; }
-        main { display: block; }
-   </style>
+        .submit-btn:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+        }
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "PEDANG88",
-  "url": "https://formpd88.com/",
-  "logo": "https://i.ibb.co/TD2y6JHx/battle-report-pedang88.png"
-}
-</script>
+        .submit-btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
 
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(245, 158, 11, 0.3);
+            text-align: center;
+        }
+
+        .footer-section h2 {
+            color: #d4af37;
+            font-size: 20px;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+            margin-bottom: 12px;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            color: rgba(255, 248, 220, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Selection */
+        ::selection {
+            background: #d4af37;
+            color: black;
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
-
-    <!-- RUNNING TEXT -->
-    <div class="running-text-container">
-        <div class="running-text-content">
-            🧧 GONG XI FA CAI! SELAMAT MERAYAKAN IMLEK 🧧 • ADA KENDALA? JANGAN RAGU MENGHUBUNGI KAMI. SETIAP PENGADUAN AKAN DITINDAKLANJUTI SECEPAT MUNGKIN • SAMPAIKAN KELUHAN ANDA. KAMI SIAP MENANGANI DENGAN CEPAT DAN RESPONSIF.
+    <!-- Running Text -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            🌙 SELAMAT HARI RAYA IDUL FITRI 1447 H 🌙 • MINAL AIDIN WAL-FAIZIN, MOHON MAAF LAHIR DAN BATIN • LAYANAN PENGADUAN TETAP BUKA 24 JAM SELAMA LIBUR LEBARAN • KAMI SIAP MELAYANI ANDA DENGAN SEPENUH HATI • MOHON MAAF ATAS SEGALA KEKURANGAN PELAYANAN KAMI.
         </div>
     </div>
 
-    <!-- LOGO -->
-    <header class="logo-container">
-        <img src="https://media.afbcdn.xyz/SiteLogo/1470/PD88%20desktop.png" alt="Logo PD88" class="site-logo">
-   </header>
+    <!-- Logo -->
+    <header>
+        <img src="https://media.afbcdn.xyz/SiteLogo/1470/PD88%20desktop.png" alt="Logo PD88" referrerpolicy="no-referrer">
+    </header>
 
-    <!-- CONTAINER FORM -->
-     <main>
-     <div class="container">
-        <h1>Form Pengaduan Resmi PEDANG88</h1>
-        <div class="header-text">
-            "Keadilan harus ditegakkan!" - Sampaikan keluhan Anda, biar tim pusat yang menyelesaikannya dengan cepat dan adil.
+    <!-- Form Container -->
+    <main>
+        <div class="form-container">
+            <h1>Form Pengaduan PEDANG88</h1>
+            <p class="subtitle">"Sucikan Hati di Hari yang Fitri" - Sampaikan keluhan Anda, kami siap membantu dengan adil dan cepat.</p>
+
+            <form id="complaintForm">
+                <!-- Kategori -->
+                <div class="form-group">
+                    <label for="kategori">KATEGORI KENDALA</label>
+                    <select id="kategori" name="kategori" required>
+                        <option value="" disabled selected>Pilih kategori...</option>
+                        <option value="Deposit">Deposit tidak diproses</option>
+                        <option value="Withdraw">Withdraw tidak dibayar</option>
+                        <option value="LiveChat">Tidak Ada LiveChat</option>
+                        <option value="CS">Pelayanan Customer Service</option>
+                        <option value="Kecurangan">Laporan Kecurangan pemain</option>
+                    </select>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username">USERNAME PLAYER</label>
+                    <input type="text" id="username" name="username" required placeholder="Masukkan Username Anda">
+                </div>
+
+                <!-- WhatsApp -->
+                <div class="form-group">
+                    <label for="whatsapp">NOMOR WHATSAPP</label>
+                    <input type="number" id="whatsapp" name="whatsapp" required placeholder="Contoh: 08123456789">
+                </div>
+
+                <!-- Keluhan -->
+                <div class="form-group">
+                    <label for="keluhan">DETAIL KELUHAN</label>
+                    <textarea id="keluhan" name="keluhan" rows="3" required placeholder="Jelaskan masalah Anda secara lengkap..."></textarea>
+                </div>
+
+                <!-- File Upload -->
+                <div class="form-group">
+                    <label>BUKTI SCREENSHOT</label>
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" name="file" accept="image/*" onchange="handleFileSelect(event)">
+                        
+                        <div id="uploadPlaceholder">
+                            <svg class="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <p class="upload-text">Tap untuk upload bukti</p>
+                        </div>
+
+                        <div id="previewContainer" class="preview-container" style="display: none;">
+                            <img id="previewImage" class="preview-image" src="" alt="Preview">
+                            <button type="button" class="remove-btn" onclick="removeFile(event)">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Message -->
+                <div id="statusMessage" class="status-message"></div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn" class="submit-btn">
+                    KIRIM LAPORAN
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="footer-section">
+                <h2>Minal Aidin wal-Faizin</h2>
+                <p>Segenap Tim PEDANG88 mengucapkan Selamat Hari Raya Idul Fitri. Mohon maaf lahir dan batin. Form ini tetap aktif untuk melayani kendala Anda selama masa liburan.</p>
+            </div>
         </div>
-
-        <form id="complaintForm">
-            <label for="kategori">KATEGORI KENDALA</label>
-            <select id="kategori" class="input-field" required>
-                <option value="" disabled selected>Pilih kategori...</option>
-                <option value="Deposit">Deposit tidak diproses</option>
-                <option value="Withdraw">Withdraw tidak dibayar</option>
-                <option value="LiveChat">Tidak Ada LiveChat</option>
-                <option value="CS">Pelayanan Customer Service</option>
-                <option value="Kecurangan">Laporan Kecurangan pemain</option>
-            </select>
-
-            <label for="username">USERNAME PLAYER</label>
-            <input type="text" id="username" class="input-field" placeholder="Masukkan Username Anda" required>
-
-            <label for="whatsapp">NOMOR WHATSAPP</label>
-            <input type="number" id="whatsapp" class="input-field" placeholder="Contoh: 08123456789" required>
-
-            <label for="keluhan">DETAIL KELUHAN</label>
-            <textarea id="keluhan" class="input-field" rows="3" placeholder="Jelaskan masalah Anda secara lengkap..." required></textarea>
-
-            <label>BUKTI SCREENSHOT</label>
-            <label class="upload-area" for="fileInput">
-                <div class="icon-camera">📸</div>
-                <p class="text-upload">Tap untuk upload bukti</p>
-                
-                <!-- PERHATIKAN BARIS INI: Style sudah dihapus, bersih! -->
-                <img id="preview-img" src="" alt="Preview Bukti">
-            </label>
-
-           <input type="file" id="fileInput" accept="image/*" required>
-
-            <button type="submit" id="submitBtn" class="btn-submit">KIRIM LAPORAN</button>
-            <div id="status"></div>
-        </form>
-
-<section class="seo-content">
-<h2>Tentang Form Pengaduan PEDANG88</h2>
-<p>Form ini digunakan untuk melaporkan kendala seperti deposit tidak masuk, withdraw tertunda, gangguan livechat, atau pelayanan customer service. Setiap laporan diproses secara profesional dan ditindaklanjuti secepat mungkin oleh tim pusat.</p>
-</section>
-
-</div>
-</main> 
+    </main>
 
     <script>
-        // --- JAVASCRIPT ---
-    const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw-ZzkbZxFhMEfUij63uNYmpUh4eYWsCMMfdGRPQ_Kl5uisCODqPQtRy7e1Nj3uh199Uw/exec";
+        // GANTI URL INI DENGAN URL DEPLOYMENT ANDA
+        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxCYYSB-auUeAHo20i-g2kmaFDtaxu77y4OhWJp4t0KDgicJqXdGwxMx639nrk1zZ9GDg/exec";
+        
+        let selectedFile = null;
 
-    const form = document.getElementById("complaintForm");
-    const fileInput = document.getElementById("fileInput");
-    const previewImg = document.getElementById("preview-img");
-    const statusEl = document.getElementById("status");
-    const btn = document.getElementById("submitBtn");
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-    // Preview gambar
-    fileInput.addEventListener("change", function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                previewImg.src = e.target.result;
-                previewImg.style.display = "block";
-            };
-            reader.readAsDataURL(file);
-        } else {
-            previewImg.style.display = "none";
-        }
-    });
-
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const file = fileInput.files[0];
-
-        // 🔥 WAJIB SCREENSHOT
-        if (!file) {
-            statusEl.style.color = "red";
-            statusEl.textContent = "❌ Bukti screenshot wajib diupload.";
-            return;
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            statusEl.style.color = "red";
-            statusEl.textContent = "❌ Ukuran foto terlalu besar (Max 5MB)";
-            return;
-        }
-
-        btn.disabled = true;
-        const btnText = btn.innerText;
-        btn.innerText = "SEDANG MENGIRIM...";
-        statusEl.style.color = "yellow";
-        statusEl.textContent = "⏳ Mohon tunggu sebentar...";
-
-        try {
-            const formData = new FormData();
-            formData.append("kategori", document.getElementById("kategori").value);
-            formData.append("username", document.getElementById("username").value);
-            formData.append("whatsapp", document.getElementById("whatsapp").value);
-            formData.append("keluhan", document.getElementById("keluhan").value);
-            formData.append("file", file);
-
-            const response = await fetch(WEBHOOK_URL, {
-                method: "POST",
-                body: formData,
-                redirect: "follow"
-            });
-
-            if (response.ok) {
-                statusEl.style.color = "#0f0";
-                statusEl.textContent = "✅ Laporan BERHASIL dikirim! Terima kasih.";
-                form.reset();
-                previewImg.style.display = "none";
-                previewImg.src = "";
-            } else {
-                throw new Error("Server Error");
+            // Validasi ukuran (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showStatus('error', '❌ Ukuran foto terlalu besar (Max 5MB)');
+                return;
             }
 
-        } catch (error) {
-            console.error(error);
-            statusEl.style.color = "red";
-            statusEl.textContent = "❌ Gagal terkirim. Cek koneksi internet Anda.";
-        } finally {
-            btn.disabled = false;
-            btn.innerText = btnText;
-        }
-    });
-</script>
+            selectedFile = file;
 
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('uploadPlaceholder').style.display = 'none';
+                document.getElementById('previewContainer').style.display = 'inline-block';
+                hideStatus();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeFile(event) {
+            event.stopPropagation();
+            selectedFile = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('uploadPlaceholder').style.display = 'block';
+            document.getElementById('previewContainer').style.display = 'none';
+        }
+
+        function showStatus(type, message) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.className = 'status-message ' + type;
+            statusEl.textContent = message;
+        }
+
+        function hideStatus() {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.className = 'status-message';
+            statusEl.textContent = '';
+        }
+
+        document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validasi
+            const kategori = document.getElementById('kategori').value;
+            if (!kategori) {
+                showStatus('error', '❌ Silakan pilih kategori kendala.');
+                return;
+            }
+
+            if (!selectedFile) {
+                showStatus('error', '❌ Bukti screenshot wajib diupload.');
+                return;
+            }
+
+            // Loading state
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'SEDANG MENGIRIM...';
+            showStatus('loading', '⏳ Mohon tunggu sebentar...');
+
+            try {
+                // Convert file to base64
+                const reader = new FileReader();
+                
+                reader.onload = async function(event) {
+                    const base64String = event.target.result.split(',')[1];
+                    const mimeType = selectedFile.type;
+
+                    // Prepare data
+                    const formData = {
+                        kategori: document.getElementById('kategori').value,
+                        username: document.getElementById('username').value,
+                        whatsapp: document.getElementById('whatsapp').value,
+                        keluhan: document.getElementById('keluhan').value,
+                        fileBase64: base64String,
+                        mimeType: mimeType,
+                        filename: selectedFile.name
+                    };
+
+                    // Send to Google Apps Script
+                    const response = await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        showStatus('success', '✅ Laporan BERHASIL dikirim! Terima kasih.');
+                        
+                        // Reset form
+                        document.getElementById('complaintForm').reset();
+                        removeFile({ stopPropagation: () => {} });
+                        
+                        // Reset button after 3 seconds
+                        setTimeout(() => {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = 'KIRIM LAPORAN';
+                            hideStatus();
+                        }, 3000);
+                    } else {
+                        throw new Error(result.message || 'Server error');
+                    }
+                };
+
+                reader.readAsDataURL(selectedFile);
+
+            } catch (error) {
+                console.error(error);
+                showStatus('error', '❌ Gagal terkirim. Cek koneksi internet Anda.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'KIRIM LAPORAN';
+            }
+        });
+    </script>
 </body>
 </html>
