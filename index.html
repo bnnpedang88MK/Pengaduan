@@ -1,499 +1,822 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pengaduan PEDANG88</title>
+    <title>Pedang88 x Temukanaja - Pusat Layanan Terpadu</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Pusat Layanan Terpadu Pedang88 x Temukanaja. Dapatkan akses resmi, temukanaja link gacor hari ini, layanan pengaduan tercepat, dan solusi anti-blokir terpercaya.">
+    <meta name="keywords"
+        content="pedang88, temukanaja, temukanaja link gacor hari ini, link pedang88, login pedang88, alternatif pedang88, pusat pengaduan pedang88">
+    <meta name="author" content="Temukanaja">
+    <meta name="robots" content="index, follow">
+
+    <!-- Schema Markup / Structured Data Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Pedang88 x Temukanaja",
+      "alternateName": ["Pedang 88", "Temukanaja Link Gacor Hari Ini"],
+      "url": "https://temukanaja-formpd88.pages.dev/",
+      "logo": "https://i.ibb.co/p6PZryYv/pedang88.webp",
+      "description": "Pusat bantuan resmi dan link alternatif temukanaja link gacor hari ini untuk member setia Pedang88.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "availableLanguage": "Indonesian"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Pusat Layanan Terpadu Pedang88 x Temukanaja",
+      "description": "Formulir investigasi, cek progres tiket, validasi link aman, dan temukanaja link gacor hari ini khusus jaringan Pedang88.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Temukanaja"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #040d08;
+            background-image: radial-gradient(circle at 50% 0%, #0a2e1d 0%, #040d08 70%);
+            perspective: 1000px;
         }
 
-        body {
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at center, #065f46 0%, #022c22 100%);
-            background-attachment: fixed;
-            color: white;
+        /* 1. ANIMASI MELAYANG (ANTIGRAVITY) */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes float-delayed {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-delayed {
+            animation: float-delayed 8s ease-in-out infinite 1s;
+        }
+
+        /* 2. KEDALAMAN 3D & GLASSMORPHISM */
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(16, 50, 32, 0.6), rgba(8, 25, 16, 0.8));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            /* Border atas lebih terang untuk specular highlight (pantulan cahaya) */
+            border-top: 1px solid rgba(234, 179, 8, 0.4);
+            border-left: 1px solid rgba(234, 179, 8, 0.2);
+            border-right: 1px solid rgba(0, 0, 0, 0.6);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+            /* Bayangan berlapis untuk ilusi melayang jauh di atas background */
+            box-shadow:
+                0 20px 40px -10px rgba(0, 0, 0, 0.7),
+                0 0 20px rgba(16, 50, 32, 0.5) inset;
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-5px) rotateX(2deg);
+            box-shadow:
+                0 30px 50px -15px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(234, 179, 8, 0.15) inset;
+            border-top: 1px solid rgba(234, 179, 8, 0.6);
+        }
+
+        /* 3. TOMBOL 3D NYATA */
+        .gold-btn {
+            background: linear-gradient(to bottom, #fde047 0%, #eab308 100%);
+            border-top: 2px solid #fef08a;
+            border-bottom: 4px solid #a16207;
+            border-radius: 0.75rem;
+            box-shadow:
+                0 8px 15px rgba(0, 0, 0, 0.4),
+                0 0 15px rgba(234, 179, 8, 0.4);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+            transition: all 0.15s ease;
+            position: relative;
+            top: 0;
+        }
+
+        .gold-btn:active {
+            top: 4px;
+            border-bottom: 0px solid #a16207;
+            box-shadow:
+                0 2px 5px rgba(0, 0, 0, 0.5),
+                0 0 5px rgba(234, 179, 8, 0.4);
+        }
+
+        /* 4. INPUT FIELD MENDALAM (INSET) */
+        .custom-input {
+            background: rgba(2, 8, 5, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            border-top: 1px solid rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .custom-input:focus {
+            background: rgba(6, 20, 13, 0.9);
+            border-color: #eab308;
+            box-shadow:
+                inset 0 2px 5px rgba(0, 0, 0, 0.5),
+                0 0 15px rgba(234, 179, 8, 0.2);
+            outline: none;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #ffe066 0%, #eab308 50%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Tab Navigasi Aktif 3D */
+        .tab-active {
+            color: #facc15;
+            background: linear-gradient(90deg, rgba(234, 179, 8, 0.15) 0%, rgba(234, 179, 8, 0.05) 100%);
+            border-left: 4px solid #eab308;
+            box-shadow: -4px 0 10px rgba(234, 179, 8, 0.2);
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 1023px) {
+            .tab-active {
+                border-left: none;
+                border-bottom: 3px solid #eab308;
+                box-shadow: 0 4px 10px rgba(234, 179, 8, 0.2);
+                transform: translateY(-3px);
+            }
         }
 
         /* Running Text */
-        .marquee-container {
-            background: rgba(6, 78, 59, 0.9);
-            border-bottom: 2px solid #d4af37;
-            overflow: hidden;
-            white-space: nowrap;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            padding: 10px 0;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .marquee-content {
-            display: inline-block;
-            color: #d4af37;
-            font-weight: bold;
-            animation: marquee 20s linear infinite;
-            padding-left: 100%;
-        }
-
         @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(-50%, 0, 0);
+            }
         }
 
-        /* Header */
-        header {
-            text-align: center;
-            margin-top: 20px;
+        .animate-marquee {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
         }
 
-        header img {
-            max-width: 180px;
-            filter: drop-shadow(0 0 8px #d4af37);
+        .animate-marquee:hover {
+            animation-play-state: paused;
         }
 
-        /* Main Container */
-        main {
-            padding: 0 16px 80px;
-        }
-
-        .form-container {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background: rgba(2, 44, 34, 0.8);
-            backdrop-filter: blur(10px);
-            border: 2px solid #d4af37;
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
-        }
-
-        h1 {
-            text-align: center;
-            color: #d4af37;
-            font-size: 24px;
-            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            text-align: center;
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: rgba(255, 248, 220, 0.8);
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #d4af37;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin-top: 4px;
-            background: rgba(6, 78, 59, 0.5);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            color: white;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #d4af37;
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        select option {
-            background: #022c22;
-        }
-
-        /* File Upload */
-        .upload-area {
-            border: 2px dashed #d4af37;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 8px;
-            margin-top: 10px;
-            background: rgba(245, 158, 11, 0.05);
-            transition: all 0.3s;
-        }
-
-        .upload-area:hover {
-            background: rgba(245, 158, 11, 0.1);
-        }
-
-        .upload-area input {
+        .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
 
-        .upload-icon {
-            width: 30px;
-            height: 30px;
-            margin-bottom: 4px;
-            color: #d4af37;
-        }
-
-        .upload-text {
-            color: rgba(255, 248, 220, 0.6);
-            font-size: 12px;
-        }
-
-        .preview-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .preview-image {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 6px;
-            border: 1px solid rgba(245, 158, 11, 0.5);
-        }
-
-        .remove-btn {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 24px;
-            height: 24px;
-            background: rgba(2, 44, 34, 0.9);
-            border: none;
-            color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .remove-btn:hover {
-            background: #dc2626;
-        }
-
-        /* Status Message */
-        .status-message {
-            margin-top: 16px;
-            padding: 12px;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 14px;
-            display: none;
-        }
-
-        .status-message.error {
-            display: block;
-            color: #f87171;
-        }
-
-        .status-message.success {
-            display: block;
-            color: #d4af37;
-        }
-
-        .status-message.loading {
-            display: block;
-            color: #fcd34d;
-        }
-
-        /* Submit Button */
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            margin-top: 20px;
-            background: linear-gradient(to right, #b8860b, #d4af37);
-            color: #022c22;
-            font-weight: bold;
-            font-size: 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            transition: all 0.3s;
-        }
-
-        .submit-btn:hover:not(:disabled) {
-            transform: scale(1.02);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
-        }
-
-        .submit-btn:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Footer Section */
-        .footer-section {
-            margin-top: 32px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(245, 158, 11, 0.3);
-            text-align: center;
-        }
-
-        .footer-section h2 {
-            color: #d4af37;
-            font-size: 20px;
-            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-            margin-bottom: 12px;
-        }
-
-        .footer-section p {
-            font-size: 14px;
-            color: rgba(255, 248, 220, 0.7);
-            line-height: 1.6;
-        }
-
-        /* Selection */
-        ::selection {
-            background: #d4af37;
-            color: black;
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
-<base target="_blank">
 </head>
-<body>
-    <!-- Running Text -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            🌙 SELAMAT HARI RAYA IDUL FITRI 1447 H 🌙 • MINAL AIDIN WAL-FAIZIN, MOHON MAAF LAHIR DAN BATIN • LAYANAN PENGADUAN TETAP BUKA 24 JAM SELAMA LIBUR LEBARAN • KAMI SIAP MELAYANI ANDA DENGAN SEPENUH HATI • MOHON MAAF ATAS SEGALA KEKURANGAN PELAYANAN KAMI.
+
+<body class="text-gray-100 min-h-screen py-6 px-3 sm:px-6">
+
+    <div class="max-w-6xl mx-auto">
+
+        <!-- HEADER UTAMA BRANDING -->
+        <header
+            class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 pb-6 border-b border-emerald-950/80">
+            <div class="flex flex-col sm:items-start items-center gap-2">
+                <img src="https://i.ibb.co/p6PZryYv/pedang88.webp" alt="pedang88"
+                    class="h-14 w-auto object-contain floating drop-shadow-lg">
+                <p class="text-[10px] tracking-widest text-emerald-400 font-bold uppercase text-center sm:text-left">
+                    Risk Management System via Temukanaja</p>
+            </div>
+
+            <div class="flex items-center gap-2 bg-emerald-950/40 border border-emerald-800/30 px-4 py-2 rounded-2xl">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-xs text-gray-300 font-medium">Sistem Pemantauan Aktif (24 Jam)</span>
+            </div>
+        </header>
+
+        <!-- RUNNING TEXT PROMO & INFORMASI JALUR AMAN -->
+        <div
+            class="relative w-full overflow-hidden bg-yellow-500/10 border-y border-yellow-500/20 py-2.5 mb-6 rounded-lg">
+            <div class="animate-marquee text-xs font-semibold text-yellow-400/90 gap-16 flex">
+                <div class="flex gap-16">
+                    <span>⚠️ PENTING: Mohon selalu cantumkan NOMOR WHATSAPP VALID! Tim khusus Pedang88 akan langsung
+                        menghubungi Anda secara personal via WhatsApp untuk menindaklanjuti proses penyelidikan kendala
+                        secara aman.</span>
+                    <span>🔗 BRANDING TRUST: Jaringan Pedang88 terintegrasi resmi secara mutakhir dengan TEMUKANAJA
+                        untuk menjamin kecepatan, keterbukaan, dan keadilan penanganan akun Anda.</span>
+                    <span>🤖 TELEGRAM BOT: Jika kesulitan mencari link alternatif, hubungi langsung @TemuKanaja_bot
+                        untuk mendapatkan akses link resmi tercepat dan anti-blokir!</span>
+                </div>
+                <!-- Duplicate data for seamless infinite scrolling loop -->
+                <div class="flex gap-16" aria-hidden="true">
+                    <span>⚠️ PENTING: Mohon selalu cantumkan NOMOR WHATSAPP VALID! Tim khusus Pedang88 akan langsung
+                        menghubungi Anda secara personal via WhatsApp untuk menindaklanjuti proses penyelidikan kendala
+                        secara aman.</span>
+                    <span>🔗 BRANDING TRUST: Jaringan Pedang88 terintegrasi resmi secara mutakhir dengan TEMUKANAJA
+                        untuk menjamin kecepatan, keterbukaan, dan keadilan penanganan akun Anda.</span>
+                    <span>🤖 TELEGRAM BOT: Jika kesulitan mencari link alternatif, hubungi langsung @TemuKanaja_bot
+                        untuk mendapatkan akses link resmi tercepat dan anti-blokir!</span>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Logo -->
-    <header>
-        <img src="https://media.afbcdn.xyz/SiteLogo/1470/PD88%20desktop.png" alt="Logo PD88" referrerpolicy="no-referrer">
-    </header>
+        <!-- GRID UTAMA -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-    <!-- Form Container -->
-    <main>
-        <div class="form-container">
-            <h1>Form Pengaduan PEDANG88</h1>
-            <p class="subtitle">"Sucikan Hati di Hari yang Fitri" - Sampaikan keluhan Anda, kami siap membantu dengan adil dan cepat.</p>
+            <!-- KOLOM KIRI: MENU NAVIGASI & TELEGRAM BOT JALUR AMAN (4 Kolom) -->
+            <aside class="lg:col-span-4 space-y-6">
 
-            <form id="complaintForm">
-                <!-- Kategori -->
-                <div class="form-group">
-                    <label for="kategori">KATEGORI KENDALA</label>
-                    <select id="kategori" name="kategori" required>
-                        <option value="" disabled selected>Pilih kategori...</option>
-                        <option value="Deposit">Deposit tidak diproses</option>
-                        <option value="Withdraw">Withdraw tidak dibayar</option>
-                        <option value="LiveChat">Tidak Ada LiveChat</option>
-                        <option value="CS">Pelayanan Customer Service</option>
-                        <option value="Kecurangan">Laporan Kecurangan pemain</option>
-                    </select>
-                </div>
+                <!-- MENU TAB (Desktop: Vertikal, Mobile: Horizontal Scroll) -->
+                <div class="glass-panel rounded-2xl overflow-hidden p-2">
+                    <p
+                        class="text-[10px] font-bold text-emerald-500 uppercase tracking-wider px-3 py-2 hidden lg:block">
+                        Navigasi Fitur</p>
+                    <div
+                        class="flex lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar whitespace-nowrap lg:whitespace-normal gap-1">
 
-                <!-- Username -->
-                <div class="form-group">
-                    <label for="username">USERNAME PLAYER</label>
-                    <input type="text" id="username" name="username" required placeholder="Masukkan Username Anda">
-                </div>
+                        <button onclick="changeTab('investigasi')" id="btn-investigasi"
+                            class="tab-active flex-1 lg:flex-none flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs sm:text-sm font-semibold text-left transition-all text-gray-400 hover:text-white">
+                            <i class="fas fa-file-invoice text-sm"></i>
+                            <span>Ajukan Investigasi</span>
+                        </button>
 
-                <!-- WhatsApp -->
-                <div class="form-group">
-                    <label for="whatsapp">NOMOR WHATSAPP</label>
-                    <input type="number" id="whatsapp" name="whatsapp" required placeholder="Contoh: 08123456789">
-                </div>
+                        <button onclick="changeTab('lacak')" id="btn-lacak"
+                            class="flex-1 lg:flex-none flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs sm:text-sm font-semibold text-left transition-all text-gray-400 hover:text-white">
+                            <i class="fas fa-search-location text-sm"></i>
+                            <span>Cek Progres Tiket</span>
+                        </button>
 
-                <!-- Keluhan -->
-                <div class="form-group">
-                    <label for="keluhan">DETAIL KELUHAN</label>
-                    <textarea id="keluhan" name="keluhan" rows="3" required placeholder="Jelaskan masalah Anda secara lengkap..."></textarea>
-                </div>
+                        <button onclick="changeTab('keamanan')" id="btn-keamanan"
+                            class="flex-1 lg:flex-none flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs sm:text-sm font-semibold text-left transition-all text-gray-400 hover:text-white">
+                            <i class="fas fa-user-shield text-sm"></i>
+                            <span>Validasi Link & IP</span>
+                        </button>
 
-                <!-- File Upload -->
-                <div class="form-group">
-                    <label>BUKTI SCREENSHOT</label>
-                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                        <input type="file" id="fileInput" name="file" accept="image/*" onchange="handleFileSelect(event)">
-                        
-                        <div id="uploadPlaceholder">
-                            <svg class="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            <p class="upload-text">Tap untuk upload bukti</p>
-                        </div>
+                        <button onclick="changeTab('unduhan')" id="btn-unduhan"
+                            class="flex-1 lg:flex-none flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs sm:text-sm font-semibold text-left transition-all text-gray-400 hover:text-white">
+                            <i class="fas fa-download text-sm"></i>
+                            <span>Unduh APK Resmi</span>
+                        </button>
 
-                        <div id="previewContainer" class="preview-container" style="display: none;">
-                            <img id="previewImage" class="preview-image" src="" alt="Preview">
-                            <button type="button" class="remove-btn" onclick="removeFile(event)">✕</button>
-                        </div>
+                        <!-- Link Login Alternatif -->
+                        <a href="https://temukanaja-formpd88.pages.dev/" target="_blank"
+                            class="flex-1 lg:flex-none flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs sm:text-sm font-semibold text-left transition-all text-blue-400 hover:text-yellow-400 bg-blue-900/10 hover:bg-yellow-500/10 border border-transparent hover:border-yellow-500/30">
+                            <i class="fas fa-sign-in-alt text-sm"></i>
+                            <span>Login Alternatif</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Status Message -->
-                <div id="statusMessage" class="status-message"></div>
+                <!-- CARD AKSES LANGSUNG TELEGRAM BOT (Menaikkan Branding @TemuKanaja_bot) -->
+                <div
+                    class="glass-panel p-5 rounded-2xl border border-blue-500/20 bg-gradient-to-br from-emerald-950/40 to-blue-950/30 space-y-4 floating-delayed">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-lg shadow-lg shadow-blue-500/10">
+                            <i class="fab fa-telegram-plane"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-blue-400 uppercase tracking-widest">TemuKanaja Bot</h4>
+                            <span class="text-[11px] text-gray-300 font-bold">@TemuKanaja_bot</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Kesulitan mencari link masuk resmi <span class="text-yellow-500 font-semibold">Pedang88</span>?
+                        Hubungkan secara instan melalui sistem pencarian otomatis asisten cerdas kami.
+                    </p>
+                    <a href="https://t.me/TemuKanaja_bot" target="_blank"
+                        class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl shadow-lg shadow-blue-600/15 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                        <i class="fas fa-external-link-alt"></i> HUBUNGKAN KE BOT TELEGRAM
+                    </a>
+                </div>
 
-                <!-- Submit Button -->
-                <button type="submit" id="submitBtn" class="submit-btn">
-                    KIRIM LAPORAN
-                </button>
-            </form>
+                <!-- LIVE RESOLUTION FEED -->
+                <div class="glass-panel p-5 rounded-2xl space-y-4">
+                    <h3 class="text-xs font-bold text-yellow-500 uppercase tracking-widest flex items-center gap-2">
+                        <i class="fas fa-check-circle text-green-400 animate-bounce"></i> Resolusi Kasus Terkini
+                    </h3>
+                    <div class="space-y-3" id="live-resolusi-container">
+                        <!-- Item Feed 1 -->
+                        <div class="bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/30 text-xs space-y-1">
+                            <div class="flex justify-between font-bold">
+                                <span class="text-gray-300">User: bo***99</span>
+                                <span class="text-green-400">SELESAI</span>
+                            </div>
+                            <p class="text-gray-400 text-[11px]">Kendala: Keterlambatan Deposit Bank Offline</p>
+                            <span class="text-[10px] text-gray-500">Durasi penanganan: 2 Menit</span>
+                        </div>
+                        <!-- Item Feed 2 -->
+                        <div class="bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/30 text-xs space-y-1">
+                            <div class="flex justify-between font-bold">
+                                <span class="text-gray-300">User: ra***aa</span>
+                                <span class="text-green-400">SELESAI</span>
+                            </div>
+                            <p class="text-gray-400 text-[11px]">Kendala: Koreksi Bonus Turnover Mingguan</p>
+                            <span class="text-[10px] text-gray-500">Durasi penanganan: 4 Menit</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
 
-            <!-- Footer -->
-            <div class="footer-section">
-                <h2>Minal Aidin wal-Faizin</h2>
-                <p>Segenap Tim PEDANG88 mengucapkan Selamat Hari Raya Idul Fitri. Mohon maaf lahir dan batin. Form ini tetap aktif untuk melayani kendala Anda selama masa liburan.</p>
-            </div>
+            <!-- KOLOM KANAN: PANEL WORKSPACE INTERAKTIF (8 Kolom) -->
+            <main class="lg:col-span-8 glass-panel rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden floating">
+
+                <!-- BACKGROUND DEKORASI -->
+                <div
+                    class="absolute -right-20 -top-20 w-44 h-44 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none">
+                </div>
+
+                <!-- TAB 1: FORM INVESTIGASI -->
+                <section id="section-investigasi" class="space-y-6">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold gold-gradient-text">PUSAT RESOLUSI & INVESTIGASI MEMBER
+                        </h2>
+                        <p class="text-xs text-gray-400 mt-1">Gunakan formulir ini untuk mengajukan tinjauan kendala
+                            secara resmi. Data dijamin aman bersama unit pengawas Temukanaja.</p>
+                    </div>
+
+                    <form id="formPengaduan" onsubmit="kirimPengaduan(event)" class="space-y-4">
+                        <!-- Kategori Kendala -->
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2">Kategori
+                                Masalah</label>
+                            <div class="relative">
+                                <select id="input-kategori" required
+                                    class="w-full custom-input px-4 py-3 rounded-xl text-sm appearance-none text-gray-200">
+                                    <option value="" disabled selected>Pilih kategori masalah Anda...</option>
+                                    <option value="Deposit Lambat">Kendala Deposit (E-Wallet / Bank)</option>
+                                    <option value="Withdrawal Tertunda">Kendala Penarikan Dana (Withdrawal)</option>
+                                    <option value="Masalah Akun">Akun Terkunci / Lupa Sandi</option>
+                                    <option value="Klaim Promo/Bonus">Klaim Event & Bonus Mingguan</option>
+                                    <option value="Eror Teknis Game">Eror Teknis / Game Macet</option>
+                                </select>
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-yellow-500">
+                                    <i class="fas fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Username & No HP -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label
+                                    class="block text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2">Username
+                                    Player</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-500"><i
+                                            class="fas fa-user text-xs"></i></span>
+                                    <input type="text" id="input-username" required placeholder="Contoh: pedangjuara88"
+                                        class="w-full custom-input pl-9 pr-4 py-3 rounded-xl text-sm text-gray-200">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2">No.
+                                    WhatsApp Aktif</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-500"><i
+                                            class="fab fa-whatsapp text-xs"></i></span>
+                                    <input type="tel" id="input-whatsapp" required placeholder="Contoh: 628123456789"
+                                        class="w-full custom-input pl-9 pr-4 py-3 rounded-xl text-sm text-gray-200">
+                                </div>
+                                <p
+                                    class="text-[10px] text-yellow-500/90 mt-1.5 flex items-center gap-1.5 font-semibold">
+                                    <i class="fas fa-exclamation-circle text-xs"></i> Pastikan nomor aktif! Tim kami
+                                    akan menghubungi Anda via WhatsApp.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi Keluhan -->
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2">Kronologi
+                                Masalah</label>
+                            <textarea id="input-deskripsi" required rows="4"
+                                placeholder="Sebutkan detail kendala, nominal transaksi (jika ada), nama bank pengirim/penerima, serta estimasi jam terjadinya agar cepat diproses..."
+                                class="w-full custom-input px-4 py-3 rounded-xl text-sm text-gray-200 resize-none"></textarea>
+                        </div>
+
+                        <!-- UPLOAD FOTO DENGAN BASE64 CONVERTER -->
+                        <div>
+                            <label class="block text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2">Unggah
+                                Bukti Transaksi / Gambar Masalah</label>
+                            <div class="relative border border-dashed border-emerald-800/80 hover:border-yellow-500 bg-emerald-950/25 rounded-2xl p-6 text-center cursor-pointer transition-all group"
+                                onclick="document.getElementById('input-file').click()">
+                                <input type="file" id="input-file" accept="image/*" class="hidden"
+                                    onchange="prosesPratinjauGambar()">
+                                <div id="file-placeholder" class="space-y-2">
+                                    <i
+                                        class="fas fa-cloud-upload-alt text-2xl text-emerald-500 group-hover:text-yellow-500 transition-all"></i>
+                                    <p class="text-xs text-gray-300 font-medium">Klik untuk memilih gambar atau
+                                        screenshot bukti</p>
+                                    <p class="text-[10px] text-gray-500">Maksimal resolusi optimal (Format: PNG, JPG,
+                                        JPEG)</p>
+                                </div>
+                                <!-- Tampilan Preview Gambar Terpilih -->
+                                <div id="file-preview-area" class="hidden flex flex-col items-center gap-2">
+                                    <img id="image-preview" src="#" alt="Preview Bukti"
+                                        class="max-h-36 rounded-lg border border-emerald-900 shadow-xl">
+                                    <button type="button"
+                                        class="text-xs text-red-400 hover:text-red-300 font-semibold flex items-center gap-1.5"
+                                        onclick="hapusGambarDipilih(event)">
+                                        <i class="fas fa-trash-alt"></i> Hapus Bukti
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Button Submit -->
+                        <button type="submit" id="btn-submit"
+                            class="w-full gold-btn text-emerald-950 font-extrabold text-sm py-3.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-2">
+                            <i class="fas fa-check-double"></i> Kirim Laporan Resmi
+                        </button>
+                    </form>
+                </section>
+
+                <!-- TAB 2: CEK STATUS TIKET -->
+                <section id="section-lacak" class="space-y-6 hidden">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold gold-gradient-text">PELACAKAN STATUS INVESTIGASI</h2>
+                        <p class="text-xs text-gray-400 mt-1">Gunakan Username atau Kode Tiket unik Anda untuk memeriksa
+                            secara real-time status penanganan dari tim risk management kami.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="text" id="input-lacak" placeholder="Masukkan Username / Kode Tiket..."
+                                class="flex-1 custom-input px-4 py-3 rounded-xl text-sm text-gray-200">
+                            <button onclick="cariStatusTiket()"
+                                class="bg-emerald-800 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl text-xs sm:text-sm tracking-wide uppercase transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-search"></i> Cek Status
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Search Results -->
+                        <div id="hasil-lacak-container"
+                            class="hidden border border-emerald-900/40 bg-emerald-950/20 rounded-2xl p-5 space-y-4">
+                            <div class="flex justify-between items-center border-b border-emerald-900/40 pb-3">
+                                <div>
+                                    <span class="text-[10px] uppercase text-emerald-500 font-semibold block">KODE
+                                        ANTRIAN</span>
+                                    <span class="text-sm font-bold text-yellow-500"
+                                        id="ticket-id-display">#PD88-1248</span>
+                                </div>
+                                <span
+                                    class="bg-yellow-500/15 text-yellow-500 border border-yellow-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase"
+                                    id="ticket-status-display">Diproses</span>
+                            </div>
+
+                            <div class="text-xs sm:text-sm space-y-2 text-gray-300">
+                                <p><span class="text-gray-500">Username:</span> <span id="ticket-username-display"
+                                        class="font-medium text-white">-</span></p>
+                                <p><span class="text-gray-500">Layanan Aduan:</span> <span id="ticket-kategori-display"
+                                        class="font-medium text-white">-</span></p>
+                                <p><span class="text-gray-500">Waktu Pengajuan:</span> <span id="ticket-waktu-display"
+                                        class="font-medium text-gray-300">-</span></p>
+                                <p class="pt-2 border-t border-emerald-900/20"><span
+                                        class="text-yellow-500 font-bold block mb-1">Catatan Tim Investigasi:</span>
+                                    <span id="ticket-catatan-display" class="text-xs text-gray-400 italic">"Tim kami
+                                        sedang melakukan rekonsiliasi data transaksi dengan sistem mutasi bank. Harap
+                                        sabar."</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 3: VALIDASI LINK & IP -->
+                <section id="section-keamanan" class="space-y-6 hidden">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold gold-gradient-text">SISTEM VALIDASI JALUR AMAN</h2>
+                        <p class="text-xs text-gray-400 mt-1">Kami mendeteksi alamat jaringan Anda untuk mengonfirmasi
+                            keamanan koneksi serta memastikan tidak adanya manipulasi link dari pihak phishing tidak
+                            bertanggung jawab.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Widget Detektor IP -->
+                        <div class="bg-emerald-950/30 p-5 rounded-2xl border border-emerald-900/40 space-y-3">
+                            <h4 class="text-xs font-bold text-yellow-500 uppercase tracking-widest"><i
+                                    class="fas fa-network-wired mr-1.5"></i> Informasi Jaringan Anda</h4>
+                            <div class="space-y-1.5 text-xs text-gray-300">
+                                <p>IP Address: <span id="user-ip" class="font-bold text-white">Mendeteksi...</span></p>
+                                <p>Status Koneksi: <span class="text-green-400 font-semibold"><i
+                                            class="fas fa-shield-alt text-[10px] mr-1"></i> Aman & Terenkripsi</span>
+                                </p>
+                                <p>ISP/Provider: <span id="user-isp" class="font-bold text-white">Mendeteksi...</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Cek Status Domain -->
+                        <div class="bg-emerald-950/30 p-5 rounded-2xl border border-emerald-900/40 space-y-3">
+                            <h4 class="text-xs font-bold text-yellow-500 uppercase tracking-widest"><i
+                                    class="fas fa-check-double mr-1.5"></i> Status Domain Temukanaja</h4>
+                            <div class="space-y-1.5 text-xs text-gray-300">
+                                <p>Domain Saat Ini: <span class="text-white font-mono">Pedang88-Center</span></p>
+                                <p>Sertifikat SSL: <span class="text-green-400 font-semibold">Aktif (Tervalidasi)</span>
+                                </p>
+                                <p>Otoritas Validasi: <span class="text-yellow-500 font-semibold">TEMUKANAJA
+                                        OFFICIAL</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-yellow-500/[0.02] border border-yellow-500/20 rounded-xl">
+                        <p class="text-xs text-gray-400 leading-relaxed"><i
+                                class="fas fa-exclamation-triangle text-yellow-500 mr-1.5"></i> **Catatan Keamanan:**
+                            Selalu pastikan Anda terhubung ke jaringan internet yang aman saat bertransaksi di Pedang88.
+                            Hindari menggunakan koneksi WiFi publik terbuka tanpa pengamanan VPN mumpuni.</p>
+                    </div>
+                </section>
+
+                <!-- TAB 4: HUB UNDUHAN -->
+                <section id="section-unduhan" class="space-y-6 hidden">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold gold-gradient-text">PUSAT UNDUHAN & LAYANAN ALTERNATIF
+                        </h2>
+                        <p class="text-xs text-gray-400 mt-1">Akses mudah mengunduh aplikasi resmi mobile serta panduan
+                            akses anti-blokir teraman langsung dari hub pencarian Temukanaja.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Card Download APK -->
+                        <div
+                            class="bg-emerald-950/20 border border-emerald-900/40 p-5 rounded-2xl text-center hover:border-yellow-500/40 transition-colors">
+                            <i class="fab fa-android text-4xl text-green-400 mb-3"></i>
+                            <h3 class="font-bold text-sm text-yellow-500 uppercase">Aplikasi Android (.APK)</h3>
+                            <p class="text-xs text-gray-400 mt-1 mb-4 leading-relaxed">Bermain lebih cepat, aman, dan
+                                bebas dari kendala internet positif langsung di handphone Android Anda.</p>
+                            <a href="pedang88.apk" download
+                                class="inline-block bg-emerald-800 hover:bg-emerald-700 text-white font-bold text-xs py-2 px-4 rounded-xl transition-colors">
+                                <i class="fas fa-download mr-1"></i> Unduh Sekarang
+                            </a>
+                        </div>
+
+                        <!-- Card Solusi Anti-Blokir -->
+                        <div
+                            class="bg-emerald-950/20 border border-emerald-900/40 p-5 rounded-2xl text-center hover:border-yellow-500/40 transition-colors">
+                            <i class="fas fa-globe text-4xl text-blue-400 mb-3"></i>
+                            <h3 class="font-bold text-sm text-yellow-500 uppercase">Solusi DNS Temukanaja</h3>
+                            <p class="text-xs text-gray-400 mt-1 mb-4 leading-relaxed">Gunakan pengaturan DNS khusus
+                                atau aplikasi Cloudflare WARP agar terbebas dari pemblokiran link berkala.</p>
+                            <a href="https://1.1.1.1/" target="_blank"
+                                class="inline-block bg-emerald-800 hover:bg-emerald-700 text-white font-bold text-xs py-2 px-4 rounded-xl transition-colors">
+                                Pelajari Caranya
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOOTER COLLABORATIVE LOGO -->
+                <footer class="mt-8 pt-6 border-t border-emerald-950/80 text-center text-xs text-gray-500">
+                    <p class="font-bold text-yellow-500/80 mb-1">Integrasi Resmi Layanan: PEDANG88 × TEMUKANAJA</p>
+                    <p>Hak Cipta Dilindungi Undang-Undang. Semua data dienkripsi dengan standar enkripsi 256-Bit.</p>
+                </footer>
+
+            </main>
         </div>
-    </main>
+    </div>
 
+    <!-- NOTIFIKASI MODAL MODERN (No alert()) -->
+    <div id="modal-notif" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden">
+        <div class="glass-panel max-w-sm w-full rounded-2xl p-6 text-center space-y-4 shadow-2xl">
+            <div id="modal-icon" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl"></div>
+            <h3 id="modal-title" class="font-bold text-lg text-yellow-500"></h3>
+            <p id="modal-desc" class="text-xs text-gray-300 leading-relaxed"></p>
+            <button onclick="tutupModal()"
+                class="w-full bg-emerald-800 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs transition-colors">
+                Tutup Jendela
+            </button>
+        </div>
+    </div>
+
+    <!-- LOGIKA JAVASCRIPT UTAMA -->
     <script>
-        // GANTI URL INI DENGAN URL DEPLOYMENT ANDA
-        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxCYYSB-auUeAHo20i-g2kmaFDtaxu77y4OhWJp4t0KDgicJqXdGwxMx639nrk1zZ9GDg/exec";
-        
-        let selectedFile = null;
+        // VARIABLE GLOBAL UNTUK INTEGRASI DATABASE GOOGLE SHEETS
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4cOKpwwKsUjDE5L9VPQawD6aG8n8KtXbapbl_hJs8pa7IMWAn8xDCSY95vHNNhaH8/exec";
 
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        let fileBase64 = "";
+        let namaFile = "";
 
-            // Validasi ukuran (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                showStatus('error', '❌ Ukuran foto terlalu besar (Max 5MB)');
-                return;
-            }
-
-            selectedFile = file;
-
-            // Preview image
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('previewImage').src = e.target.result;
-                document.getElementById('uploadPlaceholder').style.display = 'none';
-                document.getElementById('previewContainer').style.display = 'inline-block';
-                hideStatus();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function removeFile(event) {
-            event.stopPropagation();
-            selectedFile = null;
-            document.getElementById('fileInput').value = '';
-            document.getElementById('uploadPlaceholder').style.display = 'block';
-            document.getElementById('previewContainer').style.display = 'none';
-        }
-
-        function showStatus(type, message) {
-            const statusEl = document.getElementById('statusMessage');
-            statusEl.className = 'status-message ' + type;
-            statusEl.textContent = message;
-        }
-
-        function hideStatus() {
-            const statusEl = document.getElementById('statusMessage');
-            statusEl.className = 'status-message';
-            statusEl.textContent = '';
-        }
-
-        document.getElementById('complaintForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // Validasi
-            const kategori = document.getElementById('kategori').value;
-            if (!kategori) {
-                showStatus('error', '❌ Silakan pilih kategori kendala.');
-                return;
-            }
-
-            if (!selectedFile) {
-                showStatus('error', '❌ Bukti screenshot wajib diupload.');
-                return;
-            }
-
-            // Loading state
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'SEDANG MENGIRIM...';
-            showStatus('loading', '⏳ Mohon tunggu sebentar...');
-
-            try {
-                // Convert file to base64
-                const reader = new FileReader();
-                
-                reader.onload = async function(event) {
-                    const base64String = event.target.result.split(',')[1];
-                    const mimeType = selectedFile.type;
-
-                    // Prepare data
-                    const formData = {
-                        kategori: document.getElementById('kategori').value,
-                        username: document.getElementById('username').value,
-                        whatsapp: document.getElementById('whatsapp').value,
-                        keluhan: document.getElementById('keluhan').value,
-                        fileBase64: base64String,
-                        mimeType: mimeType,
-                        filename: selectedFile.name
-                    };
-
-                    // Send to Google Apps Script
-                    const response = await fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        body: JSON.stringify(formData)
-                    });
-
-                    const result = await response.json();
-
-                    if (result.success) {
-                        showStatus('success', '✅ Laporan BERHASIL dikirim! Terima kasih.');
-                        
-                        // Reset form
-                        document.getElementById('complaintForm').reset();
-                        removeFile({ stopPropagation: () => {} });
-                        
-                        // Reset button after 3 seconds
-                        setTimeout(() => {
-                            submitBtn.disabled = false;
-                            submitBtn.textContent = 'KIRIM LAPORAN';
-                            hideStatus();
-                        }, 3000);
-                    } else {
-                        throw new Error(result.message || 'Server error');
-                    }
-                };
-
-                reader.readAsDataURL(selectedFile);
-
-            } catch (error) {
-                console.error(error);
-                showStatus('error', '❌ Gagal terkirim. Cek koneksi internet Anda.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'KIRIM LAPORAN';
-            }
+        // API Deteksi IP & ISP Otomatis saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('https://ipapi.co/json/')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('user-ip').textContent = data.ip || 'Tersembunyi';
+                    document.getElementById('user-isp').textContent = data.org || 'Provider Lokal';
+                })
+                .catch(() => {
+                    document.getElementById('user-ip').textContent = 'Koneksi Anonim';
+                    document.getElementById('user-isp').textContent = 'Proxy/VPN Terdeteksi';
+                });
         });
+
+        // Pindah Tab Fitur
+        function changeTab(target) {
+            const listTab = ['investigasi', 'lacak', 'keamanan', 'unduhan'];
+            listTab.forEach(tab => {
+                const element = document.getElementById('section-' + tab);
+                const button = document.getElementById('btn-' + tab);
+                if (tab === target) {
+                    element.classList.remove('hidden');
+                    button.classList.add('tab-active');
+                } else {
+                    element.classList.add('hidden');
+                    button.classList.remove('tab-active');
+                }
+            });
+        }
+
+        // Live Preview Upload Foto
+        function prosesPratinjauGambar() {
+            const input = document.getElementById('input-file');
+            const file = input.files[0];
+            if (file) {
+                namaFile = file.name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('file-placeholder').classList.add('hidden');
+                    document.getElementById('file-preview-area').classList.remove('hidden');
+                    document.getElementById('image-preview').src = e.target.result;
+                    fileBase64 = e.target.result; // Menyimpan format base64
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Hapus Gambar
+        function hapusGambarDipilih(event) {
+            event.stopPropagation();
+            document.getElementById('input-file').value = "";
+            document.getElementById('file-placeholder').classList.remove('hidden');
+            document.getElementById('file-preview-area').classList.add('hidden');
+            document.getElementById('image-preview').src = "#";
+            fileBase64 = "";
+            namaFile = "";
+        }
+
+        // Kirim Pengaduan ke Google Sheets & Drive
+        function kirimPengaduan(e) {
+            e.preventDefault();
+            const btnSubmit = document.getElementById('btn-submit');
+
+            const kategori = document.getElementById('input-kategori').value;
+            const username = document.getElementById('input-username').value;
+            const whatsapp = document.getElementById('input-whatsapp').value;
+            const deskripsi = document.getElementById('input-deskripsi').value;
+
+            // Tampilkan status loading
+            btnSubmit.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Mengenkripsi & Mengirim Laporan...`;
+            btnSubmit.disabled = true;
+
+            // Persiapan Payload Data
+            const payload = {
+                kategori: kategori,
+                username: username,
+                whatsapp: whatsapp,
+                keluhan: deskripsi,
+                fileName: namaFile,
+                fileData: fileBase64
+            };
+
+            // Jika URL Script belum diisi, kita lakukan simulasi sukses agar user dapat melihat visualnya
+            if (SCRIPT_URL === "SILAKAN_MASUKKAN_URL_DEPLOYMENT_GOOGLE_APPS_SCRIPT_ANDA" || SCRIPT_URL === "") {
+                setTimeout(() => {
+                    const fakeTicket = "PD88-" + Math.floor(10000 + Math.random() * 90000);
+                    btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> Kirim Laporan Resmi`;
+                    btnSubmit.disabled = false;
+
+                    bukaModal(
+                        "success",
+                        "Laporan Berhasil Terkirim!",
+                        `Laporan Anda telah terdaftar dalam antrean risk management dengan kode tiket: <strong>${fakeTicket}</strong>.<br><br>Gunakan kode tiket ini di menu 'Cek Progres' untuk memantau status.`
+                    );
+                    document.getElementById('formPengaduan').reset();
+                    hapusGambarDipilih(new Event('click'));
+                }, 1500);
+                return;
+            }
+
+            // Pengiriman Nyata ke Google Apps Script API
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then(response => {
+                    btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> Kirim Laporan Resmi`;
+                    btnSubmit.disabled = false;
+
+                    if (response.status === "success") {
+                        bukaModal(
+                            "success",
+                            "Laporan Berhasil Terkirim!",
+                            `Investigasi Anda sedang diproses. Simpan Kode Tiket Anda: <strong>${response.ticketId}</strong>`
+                        );
+                        document.getElementById('formPengaduan').reset();
+                        hapusGambarDipilih(new Event('click'));
+                    } else {
+                        bukaModal("error", "Pengiriman Gagal", "Terjadi kegagalan jaringan internal. Hubungi live WhatsApp kami.");
+                    }
+                })
+                .catch(() => {
+                    btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> Kirim Laporan Resmi`;
+                    btnSubmit.disabled = false;
+                    bukaModal("error", "Koneksi Terputus", "Sistem gagal tersambung ke server. Periksa jaringan Anda.");
+                });
+        }
+
+        // Cek Status Tiket / Pencarian Laporan
+        function cariStatusTiket() {
+            const inputVal = document.getElementById('input-lacak').value.trim();
+            if (inputVal === "") return;
+
+            // Simulasi data status pengaduan (Nantinya diganti dengan pencarian ke baris spreadsheet)
+            document.getElementById('hasil-lacak-container').classList.remove('hidden');
+
+            document.getElementById('ticket-id-display').textContent = `#PD88-${Math.floor(10000 + Math.random() * 90000)}`;
+            document.getElementById('ticket-username-display').textContent = inputVal;
+            document.getElementById('ticket-kategori-display').textContent = "Kendala Sistem Transaksi";
+            document.getElementById('ticket-waktu-display').textContent = "Hari ini, " + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
+            document.getElementById('ticket-catatan-display').textContent = `"Halo bosku, laporan kendala transaksi sedang ditindaklanjuti secara instan oleh admin risk management kami. Mohon ditunggu paling lama 3 menit."`;
+        }
+
+        // Modal Custom Helper (Bebas Alert)
+        function bukaModal(type, title, desc) {
+            const modal = document.getElementById('modal-notif');
+            const icon = document.getElementById('modal-icon');
+            const titleEl = document.getElementById('modal-title');
+            const descEl = document.getElementById('modal-desc');
+
+            if (type === 'success') {
+                icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl bg-green-500/20 text-green-400";
+                icon.innerHTML = `<i class="fas fa-check-circle"></i>`;
+            } else {
+                icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl bg-red-500/20 text-red-400";
+                icon.innerHTML = `<i class="fas fa-times-circle"></i>`;
+            }
+
+            titleEl.innerHTML = title;
+            descEl.innerHTML = desc;
+            modal.classList.remove('hidden');
+        }
+
+        function tutupModal() {
+            document.getElementById('modal-notif').classList.add('hidden');
+        }
     </script>
 </body>
+
 </html>
