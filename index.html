@@ -708,26 +708,39 @@
             namaFile = "";
         }
 
-        // ===== KIRIM PENGADUAN KE GOOGLE SHEETS & WASENDERPRO =====
-        function kirimPengaduan(e) {
-            e.preventDefault();
-            const btnSubmit = document.getElementById('btn-submit');
+       // ===== KIRIM PENGADUAN KE GOOGLE SHEETS & WASENDERPRO =====
+function kirimPengaduan(e) {
+    e.preventDefault();
+    const btnSubmit = document.getElementById('btn-submit');
 
-            const kategori = document.getElementById('input-kategori').value;
-            const username = document.getElementById('input-username').value;
-            const whatsapp = document.getElementById('input-whatsapp').value;
-            const deskripsi = document.getElementById('input-deskripsi').value;
+    // Ambil elemen secara aman dengan fallback alternatif jika ID tidak ditemukan
+    const elKategori = document.getElementById('input-kategori');
+    const elUsername = document.getElementById('input-username');
+    const elWhatsapp = document.getElementById('input-whatsapp');
+    const elDeskripsi = document.getElementById('input-deskripsi') || document.getElementById('input-kronologi') || document.getElementById('deskripsi');
 
-            // Validasi nomor WhatsApp
-            if (!whatsapp || whatsapp.length < 10) {
-                bukaModal("error", "Nomor Tidak Valid", "Masukkan nomor WhatsApp yang benar dan aktif!");
-                return;
-            }
+    // Cek jika ada elemen yang beneran tidak ketemu di HTML agar tidak crash
+    if (!elKategori || !elUsername || !elWhatsapp || !elDeskripsi) {
+        console.error("Ada elemen input HTML yang ID-nya belum sesuai!");
+        bukaModal("error", "Sistem Error", "Gagal membaca formulir. Hubungi developer untuk cek keselarasan ID Input.");
+        return;
+    }
 
-            // Tampilkan status loading
-            btnSubmit.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Mengenkripsi & Mengirim Laporan...`;
-            btnSubmit.disabled = true;
+    const kategori = elKategori.value;
+    const username = elUsername.value;
+    const whatsapp = elWhatsapp.value;
+    const deskripsi = elDeskripsi.value;
 
+    // Validasi nomor WhatsApp
+    if (!whatsapp || whatsapp.length < 10) {
+        bukaModal("error", "Nomor Tidak Valid", "Masukkan nomor WhatsApp yang benar dan aktif!");
+        return;
+    }
+
+    // Tampilkan status loading
+    btnSubmit.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Mengenkripsi & Mengirim Laporan...`;
+    btnSubmit.disabled = true;
+    
             // Persiapan Payload Data
             const payload = {
                 kategori: kategori,
