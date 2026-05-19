@@ -13,6 +13,7 @@
         content="pedang88, temukanaja, temukanaja link gacor hari ini, link pedang88, login pedang88, alternatif pedang88, pusat pengaduan pedang88">
     <meta name="author" content="Temukanaja">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://temukanaja-formpd88.pages.dev/">
 
     <!-- Schema Markup / Structured Data Google -->
     <script type="application/ld+json">
@@ -644,8 +645,8 @@
     <!-- LOGIKA JAVASCRIPT UTAMA -->
     <script>
         // ===== KONFIGURASI GLOBAL =====
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw5cUYOB0fFMSxespsQMKniGFZj5n0hfqAyQBVRrLJb2X0_xr9EKi4A5C6UNcx-My7i/exec";
-        
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXXFmGa3WqRvwENyVoSF5qV_YVKfZw5Nnd1F1phaHm1isoAb96c-THYazzh5q5karv/exec";
+
         let fileBase64 = "";
         let namaFile = "";
 
@@ -742,7 +743,7 @@
                 method: "POST",
                 body: JSON.stringify(payload),
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "text/plain;charset=utf-8"
                 }
             })
                 .then(res => res.json())
@@ -785,14 +786,14 @@
 
             // Format pesan notifikasi
             const pesan = `*✅ LAPORAN PENGADUAN TERIMA* ✅\n\n` +
-                        `Halo *${username}*,\n\n` +
-                        `Laporan Anda telah kami terima dengan baik!\n\n` +
-                        `*📋 Detail Laporan:*\n` +
-                        `• Kode Tiket: *${ticketId}*\n` +
-                        `• Kategori: ${kategori}\n` +
-                        `• Status: Sedang Diproses\n\n` +
-                        `Tim investigasi kami sedang menangani kasus Anda. Mohon bersabar, kami akan segera menghubungi Anda untuk penyelidikan lebih lanjut.\n\n` +
-                        `_Terima kasih telah mempercayai Pedang88!_`;
+                `Halo *${username}*,\n\n` +
+                `Laporan Anda telah kami terima dengan baik!\n\n` +
+                `*📋 Detail Laporan:*\n` +
+                `• Kode Tiket: *${ticketId}*\n` +
+                `• Kategori: ${kategori}\n` +
+                `• Status: Sedang Diproses\n\n` +
+                `Tim investigasi kami sedang menangani kasus Anda. Mohon bersabar, kami akan segera menghubungi Anda untuk penyelidikan lebih lanjut.\n\n` +
+                `_Terima kasih telah mempercayai Pedang88!_`;
 
             // Kirim via WASenderPro Ninja Profesional
             // Endpoint: https://socket.wasenderpro.com/send
@@ -810,18 +811,18 @@
                     mentionedJidList: []
                 })
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success || data.status === 'success') {
-                    console.log("✅ Pesan WhatsApp berhasil dikirim ke " + normalizedPhone);
-                } else {
-                    console.warn("⚠️ Notifikasi WhatsApp mungkin tidak terkirim, tapi laporan sudah tersimpan");
-                }
-            })
-            .catch(err => {
-                console.warn("⚠️ Error mengirim WhatsApp (non-critical):", err);
-                // Jangan tampilkan error kepada user karena laporan sudah tersimpan
-            });
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success || data.status === 'success') {
+                        console.log("✅ Pesan WhatsApp berhasil dikirim ke " + normalizedPhone);
+                    } else {
+                        console.warn("⚠️ Notifikasi WhatsApp mungkin tidak terkirim, tapi laporan sudah tersimpan");
+                    }
+                })
+                .catch(err => {
+                    console.warn("⚠️ Error mengirim WhatsApp (non-critical):", err);
+                    // Jangan tampilkan error kepada user karena laporan sudah tersimpan
+                });
         }
 
         // ===== CEK STATUS TIKET / PENCARIAN LAPORAN =====
