@@ -645,7 +645,7 @@
     <!-- LOGIKA JAVASCRIPT UTAMA -->
     <script>
         // ===== KONFIGURASI GLOBAL =====
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjjC6qNsAS7X8ot27B71OMom-Xy373OIeU9c0D6HtkeXJ3a4Mm99TVqMEFygQm4eYU/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4UyMUNHwxAyQUbUM_dB4VPWzwP2zjeZmLPvW30kKzyOGuHDKtaegYVp0mT6FDt_N7/exec";
 
         let fileBase64 = "";
         let namaFile = "";
@@ -751,20 +751,17 @@
                     btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> Kirim Laporan Resmi`;
                     btnSubmit.disabled = false;
 
-                    if (response.status === "success") {
-                        // Kirim notifikasi WhatsApp via WASenderPro setelah laporan berhasil
-                        kirimNotifWASenderPro(username, whatsapp, kategori, response.ticketId);
+                   if (response.status === "success") {
+    // Baris kirimNotifWASenderPro di sini sudah dihapus karena sudah dihandle oleh .gs
 
-                        bukaModal(
-                            "success",
-                            "Laporan Berhasil Terkirim!",
-                            `Laporan Anda telah terdaftar dengan Kode Tiket: <strong>${response.ticketId}</strong><br><br>Kami akan segera menghubungi Anda via WhatsApp untuk penyelidikan lebih lanjut.`
-                        );
-                        document.getElementById('formPengaduan').reset();
-                        hapusGambarDipilih(new Event('click'));
-                    } else {
-                        bukaModal("error", "Pengiriman Gagal", "Terjadi kegagalan: " + (response.message || "Silahkan coba lagi"));
-                    }
+    bukaModal(
+        "success",
+        "Laporan Berhasil Terkirim!",
+        `Laporan Anda telah terdaftar dengan Kode Tiket: <strong>${response.ticketId}</strong><br><br>Kami akan segera menghubungi Anda via WhatsApp untuk penyelidikan lebih lanjut.`
+    );
+    document.getElementById('formPengaduan').reset();
+    hapusGambarDipilih(new Event('click'));
+}
                 })
                 .catch((error) => {
                     btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> Kirim Laporan Resmi`;
