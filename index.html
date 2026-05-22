@@ -613,11 +613,11 @@
                 fileData: fileBase64
             };
 
-            fetch(SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(payload),
-                headers: { "Content-Type": "text/plain;charset=utf-8" }
-            })
+    fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(payload), // <-- Hapus tanda koma (,) ini
+            headers: { "Content-Type": "text/plain;charset=utf-8" } // <-- HAPUS TOTAL BARIS 524 INI
+        })
             .then(res => res.json())
             .then(response => {
                 btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88`;
