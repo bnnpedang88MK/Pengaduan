@@ -275,7 +275,6 @@
 
                 <div class="absolute -right-20 -top-20 w-44 h-44 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-                <!-- TAB 1: INVESTIDASI -->
                 <section id="section-investigasi" class="space-y-6">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold gold-gradient-text uppercase">Pusat Pengaduan Pedang88 x Temukanaja</h2>
@@ -348,7 +347,6 @@
                     </form>
                 </section>
 
-                <!-- TAB 2: CEK STATUS -->
                 <section id="section-lacak" class="space-y-6 hidden">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold gold-gradient-text uppercase">Pelacakan Status Investigasi Player</h2>
@@ -384,7 +382,6 @@
                     </div>
                 </section>
 
-                <!-- TAB 3: VALIDASI LINK -->
                 <section id="section-keamanan" class="space-y-6 hidden">
                     <div>
                         <h2 class="text-xl sm:text-2xl font-bold gold-gradient-text uppercase">Sistem Validasi Jalur Aman</h2>
@@ -410,7 +407,6 @@
                     </div>
                 </section>
 
-                <!-- TAB 4: HUB UNDUHAN -->
                 <section id="section-unduhan" class="space-y-6 hidden">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="bg-emerald-950/20 border border-emerald-900/40 p-5 rounded-2xl text-center hover:border-yellow-500/40 transition-colors">
@@ -441,7 +437,6 @@
         </div>
     </div>
 
-    <!-- NOTIFIKASI MODAL MODERN -->
     <div id="modal-notif" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 hidden">
         <div class="glass-panel max-w-sm w-full rounded-2xl p-6 text-center space-y-4 shadow-2xl">
             <div id="modal-icon" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl"></div>
@@ -459,8 +454,8 @@
     </div>
 
     <script>
-        // Masukkan URL Web App Apps Script Anda yang bertipe macros/s/.../exec
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx6Cpw-NJQjX25NjOFaYs_YoCqkfhNP7OzNU4ktWIGhLKNzCJpjr9nuZ9wJ30arULWL/exec";
+        // URL WEB APP APPS SCRIPT ANDA
+        const SCRIPT_URL = "https://script.google.com/macros/library/d/1G35IxIpUHAI4yZ9ZtWPS2nALnqwRpUWUDPd7RFiMLT8f-ohzbMX-1L9w/22";
 
         let fileBase64 = "";
         let namaFile = "";
@@ -478,7 +473,7 @@
                     document.getElementById('user-isp').textContent = 'Proxy/VPN Aktif';
                 });
 
-            // LANGGUNG AMBIL DATA LIVE DARI GOOGLE SHEET UNTUK KOTAK RESOLUSI TERKINI
+            // LANGSUNG AMBIL DATA LIVE DARI GOOGLE SHEET UNTUK KOTAK RESOLUSI TERKINI
             muatFeedResolusiTerkini();
         });
 
@@ -538,7 +533,6 @@
                 reader.onload = function (e) {
                     const img = new Image();
                     img.onload = function() {
-                        // Batasi resolusi maksimal 1000px agar payload ringan
                         const MAX_WIDTH = 1000;
                         const MAX_HEIGHT = 1000;
                         let width = img.width;
@@ -556,20 +550,18 @@
                             }
                         }
 
-                        // Buat canvas virtual untuk konversi & kompres
                         const canvas = document.createElement('canvas');
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Konversi ke format JPEG dengan kompresi kualitas 0.7 (~100KB)
                         const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
                         
                         document.getElementById('file-placeholder').classList.add('hidden');
                         document.getElementById('file-preview-area').classList.remove('hidden');
                         document.getElementById('image-preview').src = compressedBase64;
-                        fileBase64 = compressedBase64; // base64 yang sudah sangat ringan & terkompresi
+                        fileBase64 = compressedBase64; 
                     };
                     img.src = e.target.result;
                 };
@@ -587,6 +579,7 @@
             namaFile = "";
         }
 
+        // ================= PERBAIKAN LOGIKA PENGIRIMAN DATA FORMULIR =================
         function kirimPengaduan(e) {
             e.preventDefault();
             const btnSubmit = document.getElementById('btn-submit');
@@ -604,20 +597,20 @@
             btnSubmit.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Mengirim Ke Sistem Investigasi...`;
             btnSubmit.disabled = true;
 
-            const payload = {
-                kategori: kategori,
-                username: username,
-                whatsapp: whatsapp,
-                keluhan: deskripsi,
-                fileName: namaFile,
-                fileData: fileBase64
-            };
+            // Membuka struktur data form yang valid (URL Encoded) agar sinkron dengan Apps Script e.parameter
+            let formData = new URLSearchParams();
+            formData.append("username", username);
+            formData.append("whatsapp", whatsapp);
+            formData.append("kategori", kategori);
+            formData.append("keluhan", deskripsi); // Meneruskan data ke e.parameter.keluhan di GS
+            formData.append("fileData", fileBase64);
+            formData.append("fileName", namaFile);
 
-    fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify(payload), // <-- Hapus tanda koma (,) ini
-            headers: { "Content-Type": "text/plain;charset=utf-8" } // <-- HAPUS TOTAL BARIS 524 INI
-        })
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                body: formData,
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            })
             .then(res => res.json())
             .then(response => {
                 btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88`;
@@ -631,7 +624,7 @@
                     );
                     document.getElementById('formPengaduan').reset();
                     hapusGambarDipilih(new Event('click'));
-                    muatFeedResolusiTerkini(); // Refresh feed otomatis
+                    muatFeedResolusiTerkini(); 
                 } else {
                     bukaModal("error", "Koneksi Bermasalah", "Gagal menyimpan data: " + response.message, true);
                 }
@@ -698,7 +691,7 @@
             const icon = document.getElementById('modal-icon');
             const titleEl = document.getElementById('modal-title');
             const descEl = document.getElementById('modal-desc');
-            const waBtn = document.getElementById('modal-btn-wa'); // Perbaikan ID dari 'modal-wa-btn' ke 'modal-btn-wa'
+            const waBtn = document.getElementById('modal-btn-wa');
 
             if (type === 'success') {
                 icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl bg-green-500/20 text-green-400";
