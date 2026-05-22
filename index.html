@@ -607,10 +607,11 @@
             formData.append("fileName", namaFile);
 
             fetch(SCRIPT_URL, {
-                method: "POST",
-                body: formData,
-                headers: { "Content-Type": "application/x-www-form-urlencoded" }
-            })
+    method: "POST",
+    body: formData,
+    redirect: "follow",   // ← TAMBAHKAN INI
+    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+})
             .then(res => res.json())
             .then(response => {
                 btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88`;
