@@ -482,7 +482,7 @@
         });
 
         // =========================================================================================
-        // LIVE WIDGET RESOLUSI TERKINI (KOLOM KIRI WEBSITE)
+        // LIVE WIDGET RESOLUSI TERKINI (KOLOM KIRI WEBSITE - VERSI FIX HURUF BESAR)
         // =========================================================================================
         function muatFeedResolusiTerkini() {
             const container = document.getElementById('live-resolusi-container');
@@ -495,17 +495,27 @@
                     if (response.status === "success" && response.data.length > 0) {
                         container.innerHTML = ""; // Bersihkan placeholder statis
                         response.data.forEach(item => {
-                            let un = item.username;
-                            let maskedUser = un.length > 4 ? un.substring(0, 2) + "***" + un.substring(un.length - 2) : "User***";
+                            // AMBIL DATA DENGAN HURUF BESAR "item.username" AGAR SINKRON DENGAN GOOGLE SCRIPT
+                            let un = item.username || item.USERNAME || "";
+                            let kategoriLive = item.kategori || item.KATEGORI || "Laporan";
+                            let statusLive = item.status || item.STATUS || "PENDING";
+                            let waktuLive = item.waktu || item.WAKTU || "";
+
+                            let maskedUser = "User***";
+                            if (un && un.length > 4) {
+                                maskedUser = un.substring(0, 2) + "***" + un.substring(un.length - 2);
+                            } else if (un) {
+                                maskedUser = un + "***";
+                            }
 
                             container.innerHTML += `
                                 <div class="bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/30 text-xs space-y-1">
                                     <div class="flex justify-between font-bold">
                                         <span class="text-gray-300">User: ${maskedUser}</span>
-                                        <span class="text-green-400 font-extrabold">${item.status.toUpperCase()}</span>
+                                        <span class="text-green-400 font-extrabold">${statusLive.toUpperCase()}</span>
                                     </div>
-                                    <p class="text-gray-400 text-[11px]">Kendala: Keterlambatan ${item.kategori}</p>
-                                    <span class="text-[10px] text-gray-500">Selesai Ditinjau: ${item.waktu}</span>
+                                    <p class="text-gray-400 text-[11px]">Kendala: Keterlambatan ${kategoriLive}</p>
+                                    <span class="text-[10px] text-gray-500">Selesai Ditinjau: ${waktuLive}</span>
                                 </div>
                             `;
                         });
@@ -513,7 +523,6 @@
                 })
                 .catch(err => console.warn("Gagal sinkronisasi feed resolusi:", err));
         }
-
         // =========================================================================================
         // NAVIGASI PERGANTIAN TAB MENU UTAMA LANDING PAGE
         // =========================================================================================
