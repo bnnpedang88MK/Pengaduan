@@ -723,31 +723,46 @@ function muatFeedResolusiTerkini() {
             document.getElementById('ticket-catatan-display').textContent = "Menghubungkan ke server database pusat...";
 
             fetch(SCRIPT_URL + "?ticketId=" + encodeURIComponent(inputVal), { method: "GET" })
-                .then(res => res.json())
-                .then(response => {
-                    if (btnLacak) {
-                        btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
-                        btnLacak.disabled = false;
-                    }
+  .then(res => res.json())
+  .then(response => {
+      if (btnLacak) {
+          btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
+          btnLacak.disabled = false;
+      }
 
-                    if (response.status === "success") {
-                        document.getElementById('ticket-id-display').textContent = response.ticketId;
-                        document.getElementById('ticket-username-display').textContent = response.username;
-                        document.getElementById('ticket-kategori-display').textContent = response.kategori;
-                        document.getElementById('ticket-waktu-display').textContent = response.waktu;
-                        
-                        const statusDisplay = document.getElementById('ticket-status-display');
-                        const statusUpper = response.ticketStatus.toUpperCase();
-                        statusDisplay.textContent = statusUpper;
-                        
-                        // PEMBAGIAN WARNA BADGE STATUS: OTOMATIS BERUBAH MENGIKUTI PERINTAH DI TELEGRAM CHAT
-                        if (statusUpper === "DONE" || statusUpper === "SELESAI") {
-                            statusDisplay.className = "bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-                        } else if (statusUpper === "PROSES") {
-                            statusDisplay.className = "bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-                        } else {
-                            statusDisplay.className = "bg-yellow-500/15 text-yellow-500 border border-yellow-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-                        }
+      if (response.status === "success" && response.data) {
+          // ✅ SUDAH BENAR: Menambahkan `.data` agar sistem bisa membaca isi database
+          document.getElementById('ticket-id-display').textContent = response.data.ticketId;
+          document.getElementById('ticket-username-display').textContent = response.data.username;
+          document.getElementById('ticket-kategori-display').textContent = response.data.kategori;
+          document.getElementById('ticket-waktu-display').textContent = response.data.waktu;
+
+          const statusDisplay = document.getElementById('ticket-status-display');
+          
+          // ✅ SUDAH BENAR: Pengaman anti-crash toUpperCase() di Baris 740 kamu
+          const statusUpper = response.data && response.data.status ? response.data.status.toUpperCase() : "PENDING";
+          statusDisplay.textContent = statusUpper;
+
+          // PEMBAGIAN WARNA BADGE STATUS: OTOMATIS BERUBAH MENGIKUTI PERINTAH DI TELEGRAM CHAT
+          if (statusUpper === "DONE" || statusUpper === "SELESAI") {
+              statusDisplay.className = "bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
+          } else if (statusUpper === "PROSES" || statusUpper === "DIPROSES") {
+              statusDisplay.className = "bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
+          } else {
+              statusDisplay.className = "bg-yellow-500/15 text-yellow-500 border border-yellow-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
+          }
+      } else {
+          // Jika status return dari Apps Script adalah error / not found
+          alert(response.message || "ID Tiket tidak ditemukan.");
+      }
+  })
+  .catch(err => {
+      console.error(err);
+      if (btnLacak) {
+          btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
+          btnLacak.disabled = false;
+      }
+  });
 
                         document.getElementById('ticket-catatan-display').textContent = response.catatan ? `"${response.catatan}"` : `"Laporan Anda sedang berada dalam antrean pemeriksaan Tim Risk Management Pedang88. Mohon bersabar."`;
                     } else {
