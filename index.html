@@ -457,102 +457,95 @@
       // =========================================================================================
         // URL KONEKSI UTAMA KE BACKEND GOOGLE APPS SCRIPT
         // =========================================================================================
+       // URL UTAMA GOOGLE APPS SCRIPT (SUDAH BERSIH DARI SALAH KETIK HURUF L)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMZ6nflYvn3rdv-whT6Wt5UtwhGVj6ybfYVRMe3P2BLAAOvMevN3a2AyBUfj48uV1d/exec";
 
         let fileBase64 = "";
         let namaFile = "";
 
         // =========================================================================================
-        // PEMBACAAN DATA KETIKA WEBSITE DI-LOAD PERTAMA KALI
+        // PEMBACAAN DATA KETIKA WEBSITE DI-LOAD PERTAMA KALI (ANTI-CRASH)
         // =========================================================================================
-window.addEventListener('DOMContentLoaded', () => {
-    
-    // JALUR INDEPENDEN 1: Ambil data IP menggunakan fallback gratis alternatif cloudflare
-    fetch('https://1.1.1')
-        .then(res => res.text())
-        .then(text => {
-            const lines = text.split('\n');
-            const ipLine = lines.find(line => line.startsWith('ip='));
-            if (ipLine) {
-                const userIP = ipLine.split('=')[1];
-                document.getElementById('user-ip').textContent = userIP;
+        window.addEventListener('DOMContentLoaded', () => {
+            // Menggunakan trace cloudflare agar bebas limitasi kuota 429 dan error CORS
+            fetch('https://1.1.1')
+                .then(res => res.text())
+                .then(text => {
+                    const lines = text.split('\n');
+                    const ipLine = lines.find(line => line.startsWith('ip='));
+                    if (ipLine) {
+                        const userIP = ipLine.split('=')[1];
+                        document.getElementById('user-ip').textContent = userIP;
+                    }
+                    document.getElementById('user-isp').textContent = 'Terdeteksi Aktif';
+                })
+                .catch(() => {
+                    document.getElementById('user-ip').textContent = 'Proxy/VPN Aktif';
+                    document.getElementById('user-isp').textContent = 'Jaringan Terlindungi';
+                });
+
+            // Jalankan sinkronisasi widget feed secara mandiri
+            try {
+                muatFeedResolusiTerkini();
+            } catch(e) {
+                console.warn(e);
             }
-            document.getElementById('user-isp').textContent = 'Terdeteksi Aktif';
-        })
-        .catch(() => {
-            document.getElementById('user-ip').textContent = 'Proxy Aktif';
-            document.getElementById('user-isp').textContent = 'Jaringan Terlindungi';
         });
 
-    // JALUR INDEPENDEN 2: Langsung jalankan sinkronisasi feed terpisah dari request IP
-    try {
-        muatFeedResolusiTerkini();
-    } catch(e) {
-        console.warn("Widget feed ditunda:", e);
-    }
-});
         // =========================================================================================
-// LIVE WIDGET RESOLUSI TERKINI (KOLOM KIRI WEBSITE - VERSI MURNI SESUAI DATABASE)
-// =========================================================================================
-function muatFeedResolusiTerkini() {
-    const container = document.getElementById('live-resolusi-container');
-    if (!container) return;
+        // LIVE WIDGET RESOLUSI TERKINI (KOLOM KIRI WEBSITE)
+        // =========================================================================================
+        function muatFeedResolusiTerkini() {
+            const container = document.getElementById('live-resolusi-container');
+            if (!container) return;
 
-    fetch(SCRIPT_URL + "?ticketId=FEED", { method: "GET" })
-        .then(res => res.json())
-        .then(response => {
-            if (response.status === "success" && response.data.length > 0) {
-                container.innerHTML = ""; // Bersihkan placeholder
-                response.data.forEach(item => {
-                    
-                    // Tarik data asli dari backend GS
-                    let un = item.username || item.USERNAME || "";
-                    let kategoriLive = item.kategori || item.KATEGORI || "";
-                    let statusLive = item.status || item.STATUS || "PENDING";
-                    let waktuLive = item.waktu || item.WAKTU || "";
+            fetch(SCRIPT_URL + "?ticketId=FEED", { 
+                method: "GET",
+                mode: "cors",
+                redirect: "follow"
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.status === "success" && response.data.length > 0) {
+                    container.innerHTML = ""; 
+                    response.data.forEach(item => {
+                        let un = item.username || "";
+                        let kategoriLive = item.kategori || "";
+                        let statusLive = item.status || "PENDING";
+                        let waktuLive = item.waktu || "";
 
-                    // JALUR FILTER: Jika baris di database benar-benar kosong total, jangan tampilkan apa pun
-                    if (!un && !kategoriLive) {
-                        return; 
-                    }
+                        if (!un && !kategoriLive) return; 
 
-                    // FIX LOGIKA SENSOR: Memotong murni dari Username asli di database
-                    let maskedUser = "";
-                    if (un) {
-                        un = un.trim();
-                        if (un.length > 4) {
-                            // Jika username panjang (ex: mikammikasa18 -> mi***18)
-                            maskedUser = un.substring(0, 2) + "***" + un.substring(un.length - 2);
-                        } else if (un.length > 2) {
-                            // Jika username sedang (ex: ryan -> ry***an)
-                            maskedUser = un.substring(0, 1) + "***" + un.substring(un.length - 1);
-                        } else {
-                            // Jika username sangat pendek, tampilkan apa adanya tanpa merusak nama
-                            maskedUser = un;
+                        let maskedUser = "Anonim";
+                        if (un) {
+                            un = un.trim();
+                            if (un.length > 4) {
+                                maskedUser = un.substring(0, 2) + "***" + un.substring(un.length - 2);
+                            } else if (un.length > 2) {
+                                maskedUser = un.substring(0, 1) + "***" + un.substring(un.length - 1);
+                            } else {
+                                maskedUser = un;
+                            }
                         }
-                    } else {
-                        maskedUser = "Anonim"; // Hanya muncul jika player benar-down tidak isi nama
-                    }
 
-                    // Logika Teks Kendala (Anti Gantung)
-                    let teksKendala = kategoriLive ? "Keterlambatan " + kategoriLive : "Sedang ditinjau";
+                        let teksKendala = kategoriLive ? "Keterlambatan " + kategoriLive : "Sedang ditinjau";
 
-                    // Suntikkan komponen visual ke halaman web
-                    container.innerHTML += `
-                        <div class="bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/30 text-xs space-y-1">
-                            <div class="flex justify-between font-bold">
-                                <span class="text-gray-300">User: ${maskedUser}</span>
-                                <span class="text-green-400 font-extrabold">${statusLive.toUpperCase()}</span>
+                        container.innerHTML += `
+                            <div class="bg-zinc-950/40 p-3 rounded-xl border border-zinc-800/60 text-xs space-y-1 shadow-sm">
+                                <div class="flex justify-between font-bold">
+                                    <span class="text-zinc-300">User: ${maskedUser}</span>
+                                    <span class="text-emerald-400 font-extrabold text-[11px]">${statusLive.toUpperCase()}</span>
+                                </div>
+                                <p class="text-zinc-500 text-[11px]">Kendala: ${teksKendala}</p>
+                                <span class="text-[10px] text-zinc-600 block">Selesai Ditinjau: ${waktuLive}</span>
                             </div>
-                            <p class="text-gray-400 text-[11px]">Kendala: ${teksKendala}</p>
-                            <span class="text-[10px] text-gray-500">Selesai Ditinjau: ${waktuLive}</span>
-                        </div>
-                    `;
-                });
-            }
-        })
-        .catch(err => console.warn("Gagal sinkronisasi feed resolusi:", err));
-}
+                        `;
+                    });
+                }
+            })
+            .catch(err => console.warn("Widget feed offline:", err));
+        }
+
         // =========================================================================================
         // NAVIGASI PERGANTIAN TAB MENU UTAMA LANDING PAGE
         // =========================================================================================
@@ -561,18 +554,20 @@ function muatFeedResolusiTerkini() {
             listTab.forEach(tab => {
                 const element = document.getElementById('section-' + tab);
                 const button = document.getElementById('btn-' + tab);
-                if (tab === target) {
-                    element.classList.remove('hidden');
-                    button.classList.add('tab-active');
-                } else {
-                    element.classList.add('hidden');
-                    button.classList.remove('tab-active');
+                if (element && button) {
+                    if (tab === target) {
+                        element.classList.remove('hidden');
+                        button.classList.add('tab-active');
+                    } else {
+                        element.classList.add('hidden');
+                        button.classList.remove('tab-active');
+                    }
                 }
             });
         }
 
         // =========================================================================================
-        // FUNGSI KOMPRESI CANVAS OTOMATIS (MENGECILKAN UKURAN SCREENSHOT MEMBER SECARA INSTAN)
+        // FUNGSI KOMPRESI CANVAS OTOMATIS
         // =========================================================================================
         function prosesPratinjauGambar() {
             const input = document.getElementById('input-file');
@@ -621,10 +616,10 @@ function muatFeedResolusiTerkini() {
         }
 
         // =========================================================================================
-        // FUNGSI MEMBATALKAN / MENGHAPUS GAMBAR SCREENSHOT YANG DIILIH
+        // FUNGSI MEMBATALKAN / MENGHAPUS GAMBAR SCREENSHOT YANG DIPILIH
         // =========================================================================================
         function hapusGambarDipilih(event) {
-            event.stopPropagation();
+            if (event) event.stopPropagation();
             document.getElementById('input-file').value = "";
             document.getElementById('file-placeholder').classList.remove('hidden');
             document.getElementById('file-preview-area').classList.add('hidden');
@@ -634,197 +629,38 @@ function muatFeedResolusiTerkini() {
         }
 
         // =========================================================================================
-        // JALUR PENGIRIMAN DATA FORM PENGADUAN & KELUAR NOTIFIKASI POP-UP RINCIAN (ANTI-CORS METHOD)
+        // JALUR 1: FUNGSI SUBMIT DATA FORMULIR PENGADUAN (METHOD: POST)
         // =========================================================================================
-        function kirimPengaduan(e) {
+        document.getElementById('pengaduanForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btnSubmit = document.getElementById('btn-submit');
-
-            const kategori = document.getElementById('input-kategori').value;
-            const username = document.getElementById('input-username').value;
-            const whatsapp = document.getElementById('input-whatsapp').value;
-            const deskripsi = document.getElementById('input-deskripsi').value;
-
-            if (!whatsapp || whatsapp.length < 10) {
-                bukaModal("error", "Nomor Tidak Valid", "Masukkan nomor WhatsApp yang benar dan aktif!");
-                return;
+            
+            const btnSubmit = document.getElementById('btnSubmit');
+            if (btnSubmit) {
+                btnSubmit.disabled = true;
+                btnSubmit.innerText = "Memproses...";
             }
 
-            btnSubmit.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Membuka Tiket Investigasi...`;
-            btnSubmit.disabled = true;
-
-            let formData = new URLSearchParams();
-            formData.append("username", username);
-            formData.append("whatsapp", whatsapp);
-            formData.append("kategori", kategori);
-            formData.append("keluhan", deskripsi); 
-            formData.append("fileData", fileBase64); 
-            formData.append("fileName", namaFile || "bukti.jpg");
-
-            const opsiWaktu = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            const waktuLokal = new Date().toLocaleString('id-ID', opsiWaktu).replace(/\./g, ':') + " WIB";
+            const payload = {
+                kategori: document.getElementById('kategori').value,
+                username: document.getElementById('username').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                keluhan: document.getElementById('keluhan').value,
+                imageRaw: fileBase64, 
+                imageName: namaFile
+            };
 
             fetch(SCRIPT_URL, {
                 method: "POST",
-                body: formData,
-                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+                mode: "cors",
+                redirect: "follow",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
             })
-            .then(res => res.text()) // Menerima text murni agar browser tidak hang/freeze
-            .then(textData => {
-                btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88`;
-                btnSubmit.disabled = false;
-
-                if (textData.includes("SUCCESS")) {
-                    const ambilTiket = textData.split("|")[1] || "PD88-UNKNOWN";
-
-                    // STRUKTUR NOTIFIKASI RINCIAN LENGKAP YANG AKAN MUNCUL DI LAYAR MEMBER JIKA BERHASIL
-                    const templateNotifikasiSukses = `
-                        <div class="text-left bg-gray-900 p-4 rounded-lg border border-yellow-500/30 text-sm font-sans space-y-1.5 my-3 text-gray-200">
-                            <p class="text-center font-bold text-yellow-400 mb-2">🚨 LAPORAN PENGADUAN BARU 🚨</p>
-                            <p>📋 <strong>Kategori:</strong> ${kategori}</p>
-                            <p>👤 <strong>Username:</strong> ${username}</p>
-                            <p>📱 <strong>WhatsApp:</strong> ${whatsapp}</p>
-                            <p>📝 <strong>Keluhan:</strong> ${deskripsi}</p>
-                            <p>⏰ <strong>Waktu:</strong> ${waktuLokal}</p>
-                            <p class="pt-2 border-t border-gray-700 mt-2 text-base">🎫 <strong>Kode Tiket:</strong> <span class="bg-yellow-500 text-black px-2 py-0.5 rounded font-mono font-bold">${ambilTiket}</span></p>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-2 text-center">Laporan sudah terekam aman di server pusat.<br>Silahkan catat/salin Kode Tiket di atas dan cek berkala status penanganannya di menu <strong>Cek Progres Tiket</strong>.</p>
-                    `;
-
-                    bukaModal("success", "Laporan Berhasil Terkirim!", templateNotifikasiSukses);
-
-                    document.getElementById('formPengaduan').reset();
-                    hapusGambarDipilih(new Event('click'));
-                } else {
-                    bukaModal("error", "Gagal Memproses", "Server merespon dengan kesalahan: " + textData, true);
-                }
-            })
-            .catch((error) => {
-                btnSubmit.innerHTML = `<i class="fas fa-check-double"></i> KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88`;
-                btnSubmit.disabled = false;
-                bukaModal("error", "Gangguan Jaringan", "Gagal tersambung ke server. Silahkan coba beberapa saat lagi atau hubungi CS.", true);
-            });
-        }
-
-        // =========================================================================================
-        // WIDGET KONTROL TAB LACAK: CARI STATUS TIKET & UPDATE LIVE DATA DARI TELEGRAM KONTROL
-        // =========================================================================================
-        function cariStatusTiket() {
-            const inputVal = document.getElementById('input-lacak').value.trim();
-            const containerHasil = document.getElementById('hasil-lacak-container');
-            const btnLacak = document.getElementById('btn-lacak'); 
-            
-            if (inputVal === "") {
-                bukaModal("error", "Input Kosong", "Masukkan Username atau Kode Tiket terlebih dahulu!");
-                return;
-            }
-
-            if (btnLacak) {
-                btnLacak.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Membaca Database Pusat...`;
-                btnLacak.disabled = true;
-            }
-
-            if (containerHasil) {
-                containerHasil.classList.remove('hidden');
-            }
-            
-            document.getElementById('ticket-id-display').textContent = "Mencari...";
-            document.getElementById('ticket-status-display').textContent = "...";
-            document.getElementById('ticket-username-display').textContent = "-";
-            document.getElementById('ticket-kategori-display').textContent = "-";
-            document.getElementById('ticket-waktu-display').textContent = "-";
-            document.getElementById('ticket-catatan-display').textContent = "Menghubungkan ke server database pusat...";
-
-            fetch(SCRIPT_URL + "?ticketId=" + encodeURIComponent(inputVal), { 
-                method: "GET",
-                redirect: "follow" // Memaksa browser mengikuti redirect server Google tanpa diblokir
-            })
-            .then(res => {
-                if (!res.ok) throw new Error("Koneksi database pusat bermasalah.");
-                return res.json();
-            })
+            .then(res => res.json())
             .then(response => {
-                if (btnLacak) {
-                    btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
-                    btnLacak.disabled = false;
-                }
-
-                if (response.status === "success" && response.data) {
-                    // SINKRONISASI DATA: Diambil dari response.data secara akurat dan aman
-                    document.getElementById('ticket-id-display').textContent = response.data.ticketId || "-";
-                    document.getElementById('ticket-username-display').textContent = response.data.username || "-";
-                    document.getElementById('ticket-kategori-display').textContent = response.data.kategori || "-";
-                    document.getElementById('ticket-waktu-display').textContent = response.data.waktu || "-";
-
-                    const statusDisplay = document.getElementById('ticket-status-display');
-                    const statusUpper = response.data.status ? response.data.status.toUpperCase().trim() : "PENDING";
-                    statusDisplay.textContent = statusUpper;
-
-                    // Mengambil catatan admin dari database
-                    document.getElementById('ticket-catatan-display').textContent = response.data.catatan ? `"${response.data.catatan}"` : `"Laporan Anda sedang berada dalam antrean pemeriksaan Tim Risk Management Pedang88. Mohon bersabar."`;
-
-                    // WARNA BADGE STATUS
-                    if (statusUpper === "DONE" || statusUpper === "SELESAI") {
-                        statusDisplay.className = "bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-                    } else if (statusUpper === "PROSES" || statusUpper === "DIPROSES") {
-                        statusDisplay.className = "bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-                    } else {
-                        statusDisplay.className = "bg-yellow-500/15 text-yellow-500 border border-yellow-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-                    }
-                } else {
-                    // JALUR DATA TIDAK DITEMUKAN
-                    document.getElementById('ticket-id-display').textContent = "KOSONG";
-                    document.getElementById('ticket-status-display').textContent = "TIDAK ADA";
-                    document.getElementById('ticket-status-display').className = "text-red-400 text-xs font-semibold";
-                    document.getElementById('ticket-catatan-display').textContent = "Data '" + inputVal + "' tidak ditemukan. Pastikan Kode Tiket atau Username yang dimasukkan sudah benar.";
-                }
-            })
-            .catch(err => {
-                console.error("Fetch Error:", err);
-                if (btnLacak) {
-                    btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
-                    btnLacak.disabled = false;
-                }
-                // JALUR SAMBUNGAN TERPUTUS / REDIRECT TERBLOKIR
-                document.getElementById('ticket-id-display').textContent = "ERROR";
-                document.getElementById('ticket-status-display').textContent = "TERPUTUS";
-                document.getElementById('ticket-status-display').className = "text-red-500 text-xs font-semibold";
-                document.getElementById('ticket-catatan-display').textContent = "Gagal memuat status koneksi database server. Silahkan coba lagi.";
-            });
-        } // <--- 🔒 KUNCI PENUTUP FUNGSI UTAMAMU SUDAH DISISIPKAN DI SINI DENGAN PAS!
-        // =========================================================================================
-        // WIDGET MODAL POP-UP (BUKA DAN TUTUP NOTIFIKASI LAYAR UTAMA)
-        // =========================================================================================
-        function bukaModal(type, title, desc, showWa = false) {
-            const modal = document.getElementById('modal-notif');
-            const icon = document.getElementById('modal-icon');
-            const titleEl = document.getElementById('modal-title');
-            const descEl = document.getElementById('modal-desc');
-            const waBtn = document.getElementById('modal-btn-wa');
-
-            if (type === 'success') {
-                icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl bg-green-500/20 text-green-400";
-                icon.innerHTML = `<i class="fas fa-check-circle"></i>`;
-            } else {
-                icon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto text-xl bg-red-500/20 text-red-400";
-                icon.innerHTML = `<i class="fas fa-times-circle"></i>`;
-            }
-
-            if (showWa && waBtn) {
-                waBtn.classList.remove('hidden');
-                waBtn.classList.add('flex');
-            } else if (waBtn) {
-                waBtn.classList.add('hidden');
-                waBtn.classList.remove('flex');
-            }
-
-            titleEl.innerHTML = title;
-            descEl.innerHTML = desc;
-            modal.classList.remove('hidden');
-        }
-
-        function tutupModal() {
-            document.getElementById('modal-notif').classList.add('hidden');
-            muatFeedResolusiTerkini();
+                if (response.ok) {
+                    alert("🚨 LAPORAN BERHASIL DIKIRIM!\nKode Tiket Anda: " + response.tiket);
+                    document.getElementById('pengaduanForm').reset();
+                
         }
     </script>
