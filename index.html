@@ -714,7 +714,10 @@ function muatFeedResolusiTerkini() {
                 btnLacak.disabled = true;
             }
 
-            containerHasil.classList.remove('hidden');
+            if (containerHasil) {
+                containerHasil.classList.remove('hidden');
+            }
+            
             document.getElementById('ticket-id-display').textContent = "Mencari...";
             document.getElementById('ticket-status-display').textContent = "...";
             document.getElementById('ticket-username-display').textContent = "-";
@@ -722,63 +725,63 @@ function muatFeedResolusiTerkini() {
             document.getElementById('ticket-waktu-display').textContent = "-";
             document.getElementById('ticket-catatan-display').textContent = "Menghubungkan ke server database pusat...";
 
-           fetch(SCRIPT_URL + "?ticketId=" + encodeURIComponent(inputVal), { 
-    method: "GET",
-    redirect: "follow" // ↵ MENGUNCI AKSI: Agar lolos dari blokir redirect server Google
-})
-.then(res => {
-    if (!res.ok) throw new Error("Koneksi database pusat bermasalah.");
-    return res.json();
-})
-.then(response => {
-    if (btnLacak) {
-        btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
-        btnLacak.disabled = false;
-    }
+            fetch(SCRIPT_URL + "?ticketId=" + encodeURIComponent(inputVal), { 
+                method: "GET",
+                redirect: "follow" // Memaksa browser mengikuti redirect server Google tanpa diblokir
+            })
+            .then(res => {
+                if (!res.ok) throw new Error("Koneksi database pusat bermasalah.");
+                return res.json();
+            })
+            .then(response => {
+                if (btnLacak) {
+                    btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
+                    btnLacak.disabled = false;
+                }
 
-    if (response.status === "success" && response.data) {
-        // MENAMPILKAN DATA: Semua diarahkan ke response.data secara akurat
-        document.getElementById('ticket-id-display').textContent = response.data.ticketId || "-";
-        document.getElementById('ticket-username-display').textContent = response.data.username || "-";
-        document.getElementById('ticket-kategori-display').textContent = response.data.kategori || "-";
-        document.getElementById('ticket-waktu-display').textContent = response.data.waktu || "-";
+                if (response.status === "success" && response.data) {
+                    // SINKRONISASI DATA: Diambil dari response.data secara akurat dan aman
+                    document.getElementById('ticket-id-display').textContent = response.data.ticketId || "-";
+                    document.getElementById('ticket-username-display').textContent = response.data.username || "-";
+                    document.getElementById('ticket-kategori-display').textContent = response.data.kategori || "-";
+                    document.getElementById('ticket-waktu-display').textContent = response.data.waktu || "-";
 
-        const statusDisplay = document.getElementById('ticket-status-display');
-        const statusUpper = response.data.status ? response.data.status.toUpperCase().trim() : "PENDING";
-        statusDisplay.textContent = statusUpper;
+                    const statusDisplay = document.getElementById('ticket-status-display');
+                    const statusUpper = response.data.status ? response.data.status.toUpperCase().trim() : "PENDING";
+                    statusDisplay.textContent = statusUpper;
 
-        // FITUR CATATAN TIM INVESTIGASI: Diambil dari response.data jika admin Telegram menyertakan catatan
-        document.getElementById('ticket-catatan-display').textContent = response.data.catatan ? `"${response.data.catatan}"` : `"Laporan Anda sedang berada dalam antrean pemeriksaan Tim Risk Management Pedang88. Mohon bersabar."`;
+                    // Mengambil catatan admin dari database
+                    document.getElementById('ticket-catatan-display').textContent = response.data.catatan ? `"${response.data.catatan}"` : `"Laporan Anda sedang berada dalam antrean pemeriksaan Tim Risk Management Pedang88. Mohon bersabar."`;
 
-        // PEMBAGIAN WARNA BADGE STATUS
-        if (statusUpper === "DONE" || statusUpper === "SELESAI") {
-            statusDisplay.className = "bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-        } else if (statusUpper === "PROSES" || statusUpper === "DIPROSES") {
-            statusDisplay.className = "bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-        } else {
-            statusDisplay.className = "bg-yellow-500/15 text-yellow-500 border border-yellow-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
-        }
-    } else {
-        // KONDISI DATA TIDAK DITEMUKAN
-        document.getElementById('ticket-id-display').textContent = "KOSONG";
-        document.getElementById('ticket-status-display').textContent = "TIDAK ADA";
-        document.getElementById('ticket-status-display').className = "text-red-400 text-xs font-semibold";
-        document.getElementById('ticket-catatan-display').textContent = "Data '" + inputVal + "' tidak ditemukan. Pastikan Kode Tiket atau Username yang dimasukkan sudah benar.";
-    }
-})
-.catch(err => {
-    console.error("Fetch Error:", err);
-    if (btnLacak) {
-        btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
-        btnLacak.disabled = false;
-    }
-    // KONDISI GAGAL SAMBUNG SERVER / BLOCKED REDIRECT
-    document.getElementById('ticket-id-display').textContent = "ERROR";
-    document.getElementById('ticket-status-display').textContent = "TERPUTUS";
-    document.getElementById('ticket-status-display').className = "text-red-500 text-xs font-semibold";
-    document.getElementById('ticket-catatan-display').textContent = "Gagal memuat status koneksi database server. Silahkan coba lagi.";
-});
-
+                    // WARNA BADGE STATUS
+                    if (statusUpper === "DONE" || statusUpper === "SELESAI") {
+                        statusDisplay.className = "bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
+                    } else if (statusUpper === "PROSES" || statusUpper === "DIPROSES") {
+                        statusDisplay.className = "bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
+                    } else {
+                        statusDisplay.className = "bg-yellow-500/15 text-yellow-500 border border-yellow-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider";
+                    }
+                } else {
+                    // JALUR DATA TIDAK DITEMUKAN
+                    document.getElementById('ticket-id-display').textContent = "KOSONG";
+                    document.getElementById('ticket-status-display').textContent = "TIDAK ADA";
+                    document.getElementById('ticket-status-display').className = "text-red-400 text-xs font-semibold";
+                    document.getElementById('ticket-catatan-display').textContent = "Data '" + inputVal + "' tidak ditemukan. Pastikan Kode Tiket atau Username yang dimasukkan sudah benar.";
+                }
+            })
+            .catch(err => {
+                console.error("Fetch Error:", err);
+                if (btnLacak) {
+                    btnLacak.innerHTML = `<i class="fas fa-search"></i> CARI STATUS TIKET`;
+                    btnLacak.disabled = false;
+                }
+                // JALUR SAMBUNGAN TERPUTUS / REDIRECT TERBLOKIR
+                document.getElementById('ticket-id-display').textContent = "ERROR";
+                document.getElementById('ticket-status-display').textContent = "TERPUTUS";
+                document.getElementById('ticket-status-display').className = "text-red-500 text-xs font-semibold";
+                document.getElementById('ticket-catatan-display').textContent = "Gagal memuat status koneksi database server. Silahkan coba lagi.";
+            });
+        } // <--- 🔒 KUNCI PENUTUP FUNGSI UTAMAMU SUDAH DISISIPKAN DI SINI DENGAN PAS!
         // =========================================================================================
         // WIDGET MODAL POP-UP (BUKA DAN TUTUP NOTIFIKASI LAYAR UTAMA)
         // =========================================================================================
