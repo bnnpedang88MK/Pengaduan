@@ -465,22 +465,32 @@
         // =========================================================================================
         // PEMBACAAN DATA KETIKA WEBSITE DI-LOAD PERTAMA KALI
         // =========================================================================================
-        window.addEventListener('DOMContentLoaded', () => {
-            fetch('https://ipapi.co/json/')
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('user-ip').textContent = data.ip || 'Tersembunyi';
-                    document.getElementById('user-isp').textContent = data.org || 'Provider Lokal';
-                })
-                .catch(() => {
-                    document.getElementById('user-ip').textContent = 'Koneksi Anonim';
-                    document.getElementById('user-isp').textContent = 'Proxy/VPN Aktif';
-                });
-
-            // LANGSUNG AMBIL DATA LIVE DARI GOOGLE SHEET UNTUK KOTAK RESOLUSI TERKINI
-            muatFeedResolusiTerkini();
+window.addEventListener('DOMContentLoaded', () => {
+    
+    // JALUR INDEPENDEN 1: Ambil data IP menggunakan fallback gratis alternatif cloudflare
+    fetch('https://1.1.1')
+        .then(res => res.text())
+        .then(text => {
+            const lines = text.split('\n');
+            const ipLine = lines.find(line => line.startsWith('ip='));
+            if (ipLine) {
+                const userIP = ipLine.split('=')[1];
+                document.getElementById('user-ip').textContent = userIP;
+            }
+            document.getElementById('user-isp').textContent = 'Terdeteksi Aktif';
+        })
+        .catch(() => {
+            document.getElementById('user-ip').textContent = 'Proxy Aktif';
+            document.getElementById('user-isp').textContent = 'Jaringan Terlindungi';
         });
 
+    // JALUR INDEPENDEN 2: Langsung jalankan sinkronisasi feed terpisah dari request IP
+    try {
+        muatFeedResolusiTerkini();
+    } catch(e) {
+        console.warn("Widget feed ditunda:", e);
+    }
+});
         // =========================================================================================
 // LIVE WIDGET RESOLUSI TERKINI (KOLOM KIRI WEBSITE - VERSI MURNI SESUAI DATABASE)
 // =========================================================================================
