@@ -659,11 +659,15 @@
             .then(res => res.json())
             .then(response => {
                 if (response.ok) {
-                    alert("🚨 LAPORAN BERHASIL DIKIRIM!\nKode Tiket Anda: " + response.tiket);
-                    document.getElementById('pengaduanForm').reset();
-                    if (typeof hapusGambarDipilih === "function") hapusGambarDipilih(); // Bersihkan preview gambar
+                    // Tampilkan popup terlebih dahulu
+                    alert("🚨 LAPORAN BERHASIL DIKIRIM!\n\nKode Tiket Anda: " + response.tiket);
+                    
+                    // PERBAIKAN: Menggunakan ID formPengaduan yang asli agar tidak crash
+                    document.getElementById('formPengaduan').reset();
+                    
+                    if (typeof hapusGambarDipilih === "function") hapusGambarDipilih(); 
                 } else {
-                    alert("❌ Gagal mengirim laporan: " + (response.message || "Terjadi kesalahan pada sistem."));
+                    alert("❌ Gagal mengirim laporan: " + (response.description || "Terjadi kesalahan pada sistem internal."));
                 }
             })
             .catch(err => {
@@ -674,7 +678,7 @@
                 // Mengembalikan tombol ke keadaan semula agar bisa digunakan kembali
                 if (btnSubmit) {
                     btnSubmit.disabled = false;
-                    btnSubmit.innerText = "KIRIM LAPORAN KE PUSAT PENGADUAN";
+                    btnSubmit.innerText = "KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88";
                 }
             });
         });
