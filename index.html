@@ -458,7 +458,7 @@
         // URL KONEKSI UTAMA KE BACKEND GOOGLE APPS SCRIPT
         // =========================================================================================
        // URL UTAMA GOOGLE APPS SCRIPT (SUDAH BERSIH DARI SALAH KETIK HURUF L)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMZ6nflYvn3rdv-whT6Wt5UtwhGVj6ybfYVRMe3P2BLAAOvMevN3a2AyBUfj48uV1d/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEk9v4lHPCzEtY4mygjMd2PXzJZuj-ob6qQ7gXVgC_K03O_yl47sXgmTWpQPC9kUnq/exec";
 
         let fileBase64 = "";
         let namaFile = "";
@@ -629,7 +629,7 @@
         }
 
         // =========================================================================================
-        // JALUR 1: FUNGSI SUBMIT DATA FORMULIR PENGADUAN (METHOD: POST)
+        // JALUR 1: FUNGSI SUBMIT DATA FORMULIR PENGADUAN (METHOD: POST) - FIXED version
         // =========================================================================================
         document.getElementById('pengaduanForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -661,6 +661,21 @@
                 if (response.ok) {
                     alert("🚨 LAPORAN BERHASIL DIKIRIM!\nKode Tiket Anda: " + response.tiket);
                     document.getElementById('pengaduanForm').reset();
-                
-        }
+                    if (typeof hapusGambarDipilih === "function") hapusGambarDipilih(); // Bersihkan preview gambar
+                } else {
+                    alert("❌ Gagal mengirim laporan: " + (response.message || "Terjadi kesalahan pada sistem."));
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("❌ Gagal terhubung ke server. Periksa kembali koneksi internet Anda.");
+            })
+            .finally(() => {
+                // Mengembalikan tombol ke keadaan semula agar bisa digunakan kembali
+                if (btnSubmit) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerText = "KIRIM LAPORAN KE PUSAT PENGADUAN";
+                }
+            });
+        });
     </script>
