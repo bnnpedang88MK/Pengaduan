@@ -324,23 +324,25 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2">Unggah Bukti Transaksi / Gambar Masalah</label>
-                            <div class="relative border border-dashed border-emerald-800/80 hover:border-yellow-500 bg-emerald-950/25 rounded-2xl p-6 text-center cursor-pointer transition-all group" onclick="document.getElementById('input-file').click()">
-                                <input type="file" id="input-file" accept="image/*" class="hidden" onchange="prosesPratinjauGambar()">
-                                <div id="file-placeholder" class="space-y-2">
-                                    <i class="fas fa-cloud-upload-alt text-2xl text-emerald-500 group-hover:text-yellow-500 transition-all"></i>
-                                    <p class="text-xs text-gray-300 font-medium">Klik untuk memilih gambar atau screenshot bukti transaksi</p>
-                                    <p class="text-[10px] text-gray-500">Sistem kompresi aktif (Mendukung file ukuran besar)</p>
-                                </div>
-                                <div id="file-preview-area" class="hidden flex flex-col items-center gap-2">
-                                    <img id="image-preview" src="#" alt="Preview Bukti Laporan" class="max-h-36 rounded-lg border border-emerald-900 shadow-xl">
-                                    <button type="button" class="text-xs text-red-400 hover:text-red-300 font-semibold flex items-center gap-1.5" onclick="hapusGambarDipilih(event)">
-                                        <i class="fas fa-trash-alt"></i> Hapus Bukti
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+    <label class="block text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2">Unggah Bukti Transaksi / Gambar Masalah</label>
+    <div class="relative border border-dashed border-emerald-800/80 hover:border-yellow-500 bg-emerald-950/25 rounded-2xl p-6 text-center cursor-pointer transition-all group" onclick="document.getElementById('input-file').click()">
+        
+        <!-- INPUT FILE & PLACEHOLDER (DIPERBAIKI) -->
+        <input type="file" id="input-file" accept="image/*" class="hidden">
+        <div id="file-placeholder" class="space-y-2">
+            <i class="fas fa-cloud-upload-alt text-2xl text-emerald-500 group-hover:text-yellow-500 transition-all"></i>
+            <p class="text-xs text-gray-300 font-medium">Klik untuk memilih gambar atau screenshot bukti transaksi</p>
+            <p class="text-[10px] text-gray-500">Sistem kompresi aktif (Mendukung file ukuran besar)</p>
+        </div>
 
+        <!-- TEKS LINK NAMA FILE VERSI RINGAN (DIPERBAIKI) -->
+        <div id="wrapper-link-file" class="mt-2 hidden text-center">
+            <span class="text-xs text-gray-400">Bukti terpilih:</span>
+            <a href="#" id="nama-file-pilihan" onclick="return false;" class="text-xs text-yellow-400 underline ml-1 hover:text-yellow-300 font-medium"></a>
+        </div>
+
+    </div>
+</div>
                         <button type="submit" id="btn-submit" class="w-full gold-btn text-emerald-950 font-extrabold text-sm py-3.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-2">
                             <i class="fas fa-check-double"></i> KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88
                         </button>
