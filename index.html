@@ -458,7 +458,7 @@
         // URL KONEKSI UTAMA KE BACKEND GOOGLE APPS SCRIPT
         // =========================================================================================
        // URL UTAMA GOOGLE APPS SCRIPT (SUDAH BERSIH DARI SALAH KETIK HURUF L)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEk9v4lHPCzEtY4mygjMd2PXzJZuj-ob6qQ7gXVgC_K03O_yl47sXgmTWpQPC9kUnq/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJqnMX7tfMgE8AD2Y4pgZDznEijv0QXUF4VHU_PBJS-VoDfH6OKoiAzl5dBM0wSN5D/exec";
 
         let fileBase64 = "";
         let namaFile = "";
@@ -629,57 +629,64 @@
         }
 
         // =========================================================================================
-        // JALUR 1: FUNGSI SUBMIT DATA FORMULIR PENGADUAN (METHOD: POST) - FIXED version
+        // JALUR 1: FUNGSI SUBMIT DATA FORMULIR PENGADUAN (METHOD: POST) - FIXED VERSION
         // =========================================================================================
-        document.getElementById('pengaduanForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const btnSubmit = document.getElementById('btnSubmit');
-            if (btnSubmit) {
-                btnSubmit.disabled = true;
-                btnSubmit.innerText = "Memproses...";
-            }
-
-            const payload = {
-                kategori: document.getElementById('kategori').value,
-                username: document.getElementById('username').value,
-                whatsapp: document.getElementById('whatsapp').value,
-                keluhan: document.getElementById('keluhan').value,
-                imageRaw: fileBase64, 
-                imageName: namaFile
-            };
-
-            fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "cors",
-                redirect: "follow",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(response => {
-                if (response.ok) {
-                    // Tampilkan popup terlebih dahulu
-                    alert("🚨 LAPORAN BERHASIL DIKIRIM!\n\nKode Tiket Anda: " + response.tiket);
-                    
-                    // PERBAIKAN: Menggunakan ID formPengaduan yang asli agar tidak crash
-                    document.getElementById('formPengaduan').reset();
-                    
-                    if (typeof hapusGambarDipilih === "function") hapusGambarDipilih(); 
-                } else {
-                    alert("❌ Gagal mengirim laporan: " + (response.description || "Terjadi kesalahan pada sistem internal."));
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                alert("❌ Gagal terhubung ke server. Periksa kembali koneksi internet Anda.");
-            })
-            .finally(() => {
-                // Mengembalikan tombol ke keadaan semula agar bisa digunakan kembali
+        // Proteksi Pintar: Mendeteksi ID formPengaduan atau pengaduanForm secara otomatis agar tidak crash
+        const targetForm = document.getElementById('formPengaduan') || document.getElementById('pengaduanForm') || document.querySelector('form');
+        
+        if (targetForm) {
+            targetForm.addEventListener('submit', function(e) {
+                // WAJIB: Menahan aksi bawaan HTML agar halaman TIDAK REFRESH otomatis!
+                e.preventDefault();
+                
+                const btnSubmit = document.getElementById('btnSubmit');
                 if (btnSubmit) {
-                    btnSubmit.disabled = false;
-                    btnSubmit.innerText = "KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88";
+                    btnSubmit.disabled = true;
+                    btnSubmit.innerText = "Memproses Laporan...";
                 }
+
+                const payload = {
+                    kategori: document.getElementById('kategori').value,
+                    username: document.getElementById('username').value,
+                    whatsapp: document.getElementById('whatsapp').value,
+                    keluhan: document.getElementById('keluhan').value,
+                    imageRaw: fileBase64, 
+                    imageName: namaFile
+                };
+
+                // Mengirimkan data ke Google Apps Script Web App URL Anda
+                fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "cors",
+                    redirect: "follow",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.ok) {
+                        // 1. POPUP SUKSES AKAN MUNCUL DENGAN AMAN DI SINI
+                        alert("🚨 LAPORAN BERHASIL DIKIRIM!\n\nKode Tiket Anda: " + response.tiket);
+                        
+                        // 2. Mengosongkan form kembali menggunakan target elemen yang valid
+                        targetForm.reset();
+                        
+                        if (typeof hapusGambarDipilih === "function") hapusGambarDipilih(); 
+                    } else {
+                        // Membaca pesan error (.description) murni dari Google Script Anda
+                        alert("❌ Gagal mengirim laporan: " + (response.description || "Terjadi penolakan pada sistem internal."));
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("❌ Gagal terhubung ke server. Periksa kembali koneksi internet Anda.");
+                })
+                .finally(() => {
+                    // Mengembalikan tombol ke keadaan semula agar bisa digunakan kembali
+                    if (btnSubmit) {
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerText = "KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88";
+                    }
+                });
             });
-        });
-    </script>
+        }
