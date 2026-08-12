@@ -492,7 +492,7 @@
         // =========================================================================================
         // URL KONEKSI UTAMA KE BACKEND GOOGLE APPS SCRIPT
         // =========================================================================================
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwB_Uq5UAJDYmNvNQZQ3xSjqHG5FjME2nCYcv5Plq1CcWDfy3hfZX_0foDpmO8f_SOE/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-5nCDHIM4h2MVtGLgLWbiEQpbv6pS0Cij9KZcuwFvbNlw0czeWgc8dbU3kzaCfOQ_/exec";
 
         let fileBase64 = "";
         let namaFile = "";
@@ -796,26 +796,31 @@
                     imageName: namaFile
                 };
 
-                // Mengirimkan data ke Google Apps Script Web App URL Anda
+// Mengirimkan data ke Google Apps Script Web App URL Anda
                 fetch(SCRIPT_URL, {
                     method: "POST",
-                    mode: "cors",
                     redirect: "follow",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify(payload)
                 })
-                .then(res => res.json())
-                .then(response => {
-                    if (response.status === "success" || response.ok) {
+                .then(res => {
+                    return res.text();
+                })
+                .then(textData => {
+                    let response;
+                    try {
+                        response = JSON.parse(textData);
+                    } catch (e) {
+                        throw new Error("Respon server bukan format JSON yang valid.");
+                    }
+
+                    if (response && (response.status === "success" || response.ok === true)) {
                         const tiketCode = response.tiket || response.ticketCode || "SUKSES";
-                        // POPUP SUKSES DENGAN MODAL ELEGAN
                         tampilkanModal(
                             "🚨 LAPORAN BERHASIL DIKIRIM!",
                             "Laporan Anda telah berhasil diajukan ke tim investigasi. Kode Tiket: " + tiketCode + ". Tim kami akan segera menghubungi Anda via WhatsApp.",
                             "success"
                         );
-                        
-                        // Mengosongkan form kembali setelah sukses
                         targetForm.reset();
                         hapusGambarDipilih(); 
                     } else {
@@ -827,15 +832,15 @@
                     }
                 })
                 .catch(err => {
-                    console.error(err);
+                    console.error("Detail Error:", err);
                     tampilkanModal(
                         "❌ Masalah Jaringan",
-                        "Gagal terhubung ke server pengaduan. Periksa kembali jaringan Anda dan coba kirim ulang.",
+                        "Gagal terhubung ke server pengaduan. Pastikan ukuran gambar tidak terlalu besar atau periksa koneksi Anda.",
                         "error"
                     );
                 })
                 .finally(() => {
-                    // Mengembalikan tombol ke keadaan semula
+                    // Mengembalikan tombol ke keadaan semula (penutup `.finally` harus menyambung ke .catch di atasnya)
                     if (btnSubmit) {
                         btnSubmit.disabled = false;
                         btnSubmit.innerHTML = '<i class="fas fa-check-double"></i> KIRIM LAPORAN KE PUSAT PENGADUAN PEDANG88';
